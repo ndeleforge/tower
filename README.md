@@ -15,7 +15,10 @@
 
 # Quick start
 
-You can try the application directly in your browser [here](https://ndeleforge.fr/tower/).  
+- Git clone the project
+- Install dependencies with `npm build`
+- Start the server with `npm start`
+- Go to [the local server](https://localhost:3001)
 
 # Ressources
 
