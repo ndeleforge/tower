@@ -2,7 +2,7 @@
   "name": "la-tour",
   "version": "1.0.0",
   "description": "![Header](/docs/header.png)",
-  "main": "index.js",
+  "main": "server.js",
   "directories": {
     "doc": "docs"
   },
