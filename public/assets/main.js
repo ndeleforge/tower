@@ -310,7 +310,7 @@ function attack() {
 
     // Damage taken
     const nbHit = Math.ceil(_game.events.monster[0] / _game.character.power);
-    let damage = parseInt(((nbHit - 1) - _game.character.stamina) * _game.events.monster[1])
+    let damage = parseInt((nbHit - _game.character.stamina) * _game.events.monster[1])
     if (nbHit == 1 || damage < 0) damage = 0; // Can't be negative
     _game.character.health = _game.character.health - damage;
 
@@ -395,9 +395,9 @@ function openChest() {
     playSound("chest");
     changeDisplay("normal");
 
-    const loot = rand(0, 1);
+    const loot = rand(0, 15);
     let limited = false;
-    let paragraph_1, paragraph_2, paragraph_3;
+    let paragraph_1, paragraph_2, paragraph_3 = "";
 
     // Potion (11,12,13,14,15)
     if (loot > 10) {
