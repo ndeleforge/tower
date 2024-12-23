@@ -182,7 +182,7 @@ function superviseGame() {
     checkGameOver();
     checkLevelUp()
     displayHeader()
-    checkIemAvailability()
+    checkItemAvailability()
     calculateScore()
 
     // Save content and save all data 
@@ -365,7 +365,6 @@ function useScroll() {
         get("#game").innerHTML = paragraph_1 + paragraph_2 + paragraph_3;
     }
 }
-
 
 // =================================================
 // ============ CHEST EVENT
@@ -681,7 +680,7 @@ function displayHeader() {
  * Check item availbility
  **/
 
-function checkIemAvailability() {
+function checkItemAvailability() {
     // Potion -> heal button
     if (_game.character.item_potion > 0 && _game.character.health != _game.character.health_max) {
         get("#use_potion").classList.remove("disabled")
