@@ -310,8 +310,7 @@ function attack() {
 
     // Damage taken
     const nbHit = Math.ceil(_game.events.monster[0] / _game.character.power);
-    let damage = parseInt((nbHit - _game.character.stamina) * _game.events.monster[1])
-    if (nbHit == 1 || damage < 0) damage = 0; // Can't be negative
+    const damage = (nbHit <= 1) ? 0 : parseInt((_game.events.monster[1] - _game.character.stamina) * (nbHit - 1));
     _game.character.health = _game.character.health - damage;
 
     // Experience
