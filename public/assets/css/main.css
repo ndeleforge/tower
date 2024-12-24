@@ -3,10 +3,10 @@
 
 /* light theme */
 
-@media (prefers-color-scheme:no-preference) ,
+@media (prefers-color-scheme:no-preference),
 (prefers-color-scheme:light) {
     :root {
-        --background-body: radial-gradient(circle,#5585b5,#8aa0c7,#b6bed9,#ddddec,#fff);
+        --background-body: radial-gradient(circle, #5585b5, #8aa0c7, #b6bed9, #ddddec, #fff);
         --background-app: white;
         --background-character: #262931;
         --text-main: black;
@@ -23,7 +23,7 @@
 
 @media (prefers-color-scheme:dark) {
     :root {
-        --background-body: radial-gradient(circle,#262931,#212026,#1a171b,#110e10,#000);
+        --background-body: radial-gradient(circle, #262931, #212026, #1a171b, #110e10, #000);
         --background-app: #262931;
         --background-character: black;
         --text-main: white;
@@ -55,7 +55,7 @@
     --progress-health: indianred;
     --progress-xp: lightskyblue;
     --start-input-background: transparent;
-    --transparency: rgba(0,0,0,0.9);
+    --transparency: rgba(0, 0, 0, 0.9);
 }
 
 /* ======================================== */
@@ -103,6 +103,7 @@ a:hover {
 }
 
 @media (max-width:1024px) {
+
     html,
     body {
         font-size: 0.9em;

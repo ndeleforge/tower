@@ -11,7 +11,7 @@ function get(element) {
             return document.querySelector(element);
         }
     }
-    
+
     // Class element
     if (element.search(".") == 0 && element.split(".")[1] != null) {
         if (document.querySelectorAll(element).length != 0) {
@@ -21,7 +21,7 @@ function get(element) {
 
     // Tag element
     if (element.search("~") == 0 && element.split("~")[1] != null) {
-        if (document.querySelectorAll(element.split("~")[1])[0] != null) { 
+        if (document.querySelectorAll(element.split("~")[1])[0] != null) {
             return document.querySelectorAll(element.split("~")[1])[0];
         }
     }

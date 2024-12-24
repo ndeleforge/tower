@@ -22,14 +22,15 @@
             <span id="tower"></span>
             <button class="button" id="open_menu"><img id="open_menu_img"></button>
         </header>
-        
+
         <!-- title_screen -->
         <div id="title_screen" class="container">
             <img id="title_logo" src="assets/image/event/tower.png">
             <h1 id="title_text"></h1>
 
             <form>
-                <input type="text" id="title_character" pattern="^[A-ZÀ-Ýa-zà-ý ']{2,25}(?:[ -][A-ZÀ-Ýa-zà-ý ']{2,25})?$" required>
+                <input type="text" id="title_character"
+                    pattern="^[A-ZÀ-Ýa-zà-ý ']{2,25}(?:[ -][A-ZÀ-Ýa-zà-ý ']{2,25})?$" required>
                 <button type='submit' id="play" onclick="return false"></button>
             </form>
 
@@ -65,7 +66,7 @@
             </div>
 
             <div id="game"></div>
-    
+
             <div id="actions">
                 <div class="actions_line" id="classic_mode">
                     <button class="button_action" id="move"></button>
@@ -94,14 +95,14 @@
     <div id="blank_menu"></div>
     <div id="menu">
         <h1 id="settings_title" class="menu_title"></h1>
-            <div class="button_list button_list_menu">
-                <button class="menu_button" id="volume_button"></button>
-                <button class="menu_button" id="confirm_restart"><i class="fas fa-fast-backward"></i></button>
-                <button class="menu_button" id="confirm_delete"><i class="fas fa-sign-out-alt"></i></button>
-            </div>
+        <div class="button_list button_list_menu">
+            <button class="menu_button" id="volume_button"></button>
+            <button class="menu_button" id="confirm_restart"><i class="fas fa-fast-backward"></i></button>
+            <button class="menu_button" id="confirm_delete"><i class="fas fa-sign-out-alt"></i></button>
+        </div>
 
         <h1 id="stats_title" class="menu_title"></h1>
-            <ul id="list_stats"></ul>
+        <ul id="list_stats"></ul>
 
         <p id="menu_footer"></p>
     </div>
@@ -120,11 +121,19 @@
         </div>
     </div>
     <!-- // POPUP -->
-     
+
     <script src="assets/js/utils.js"></script>
     <script src="assets/js/settings.js"></script>
     <script src="assets/js/lang.js"></script>
     <script src="assets/js/data.js"></script>
+    <script src="assets/js/page.js"></script>
+    <script src="assets/js/sound.js"></script>
+    <script src="assets/js/supervisor.js"></script>
+    <script src="assets/js/events.js"></script>
+    <script src="assets/js/fight.js"></script>
+    <script src="assets/js/chest.js"></script>
+    <script src="assets/js/merchant.js"></script>
     <script src="assets/js/game.js"></script>
 </body>
+
 </html>
