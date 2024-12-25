@@ -65,7 +65,7 @@ function attack() {
 
     // Damage taken
     const nbHit = Math.ceil(_game.events.monster[0] / _game.character.power);
-    const damage = (nbHit <= 1) ? 0 : parseInt((_game.events.monster[1] - _game.character.stamina) * (nbHit - 1));
+    const damage = (nbHit <= 1) ? 0 : parseInt(Math.max(0, (_game.events.monster[1] - _game.character.stamina)) * (nbHit - 1));
     _game.character.health = _game.character.health - damage;
 
     // Experience
@@ -92,6 +92,8 @@ function attack() {
             `${plural(xp, CONTENT.vocabulary.point_singular, CONTENT.vocabulary.point_plural)} ${CONTENT.events.fight_win_4}`
         ], "good_information");
 }
+
+
 
 /**
  * Fight monster by magic : no damage but less experience
