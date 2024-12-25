@@ -66,10 +66,14 @@ function checkLevelUp() {
 
 /**
  * Check if there is a new version
+ * Reload only for major version
  **/
 
 function checkVersion() {
-    if (_game.core.version != VERSION) {
+    const currentVersion = _game.core.version.split('.').map(Number);
+    const newVersion = VERSION.split('.').map(Number);
+
+    if (newVersion[0] > currentVersion[0]) {
         get("#blank_popup").style.display = "block";
         get("#popup").style.display = "flex";
         get("#popup_text").innerHTML = CONTENT.main.updated;
