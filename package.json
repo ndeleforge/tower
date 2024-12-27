@@ -1,20 +1,34 @@
 {
-  "name": "la-tour",
-  "version": "1.0.2",
-  "description": "![Header](/docs/header.png)",
+  "name": "tower",
+  "version": "1.0.3",
+  "description": "Infinite mobile RPG game",
   "main": "server.js",
   "directories": {
     "doc": "docs"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "NODE_ENV=production node server.js",
+    "dev": "NODE_ENV=development node server.js",
+    "clean": "rm -rf dist build && docker image prune -f",
+    "build": "docker build -t tower:${npm_package_version} .",
+    "export": "docker save -o build/tower-${npm_package_version}.tar tower:${npm_package_version}"
   },
-  "keywords": [],
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ndeleforge/tower.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ndeleforge/tower/issues"
+  },
+  "homepage": "https://github.com/ndeleforge/tower",
+  "keywords": ["rpg", "game", "infinite", "mobile"],
+  "author": "ndeleforge",
   "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  },
   "devDependencies": {
     "browser-sync": "^3.0.2",
-    "express": "^4.19.2",
-    "minify": "^11.2.0"
+    "express": "^4.19.2"
   }
 }

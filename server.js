@@ -2,21 +2,18 @@ const express = require('express');
 const path = require('path');
 const browserSync = require('browser-sync').create();
 const app = express();
-const port = 3000;
+const port = 7771;
 
+const isDevelopment = process.env.NODE_ENV === 'development';
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
-
 app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}/`);
-    browserSync.init({
-        proxy: `http://localhost:${port}`,
-        files: ['public/**/*.*'],
-        port: 3001,
-        open: false,
-        notify: false
-    });
+    if (isDevelopment) {
+        browserSync.init({
+            proxy: `http://localhost:${port}`,
+            files: ['public/**/*.*'],
+            open: false,
+            notify: false
+        });
+    }
 });
