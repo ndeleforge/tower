@@ -93,8 +93,6 @@ function attack() {
         ], "good_information");
 }
 
-
-
 /**
  * Fight monster by magic : no damage but less experience
  **/

@@ -2,6 +2,7 @@
  * Display an image for the game event
  * @param {string} value path to the image
  **/
+
 function displayImage(value, alt = false) {
     return alt ? `<div id="container_img"><img src="assets/image/${value}" alt="${alt}"></div>` : `<div id="container_img"><img src="assets/image/${value}" alt=""></div>`;
 }
@@ -11,6 +12,7 @@ function displayImage(value, alt = false) {
  * @param {string|array} value text to display, can be an array
  * @param {string} classname class to attribute to the text
  **/
+
 function displayParagraph(value, classname = false) {
     if (Array.isArray(value)) value = value.join(' ');
     return classname ? `<p class="${classname}">${value}.</p>` : `<p>${value}.</p>`;
@@ -177,3 +179,12 @@ function checkItemAvailability() {
         get("#use_scroll").classList.add("disabled");
     }
 }
+
+/**
+ * Display the content of the game page
+ **/
+
+function setGameDisplay(display, clean = true) {
+    if (clean) get("#game").innerHTML = display
+    else get("#game").innerHTML += display
+} 

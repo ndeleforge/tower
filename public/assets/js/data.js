@@ -1,146 +1,103 @@
 /**
- * Create new game data or parse existing game dat
+ * Return the number of one item of the inventory
  **/
 
-function loadData() {
-    if (!getStorage("TOWER-save")) {
-        _game = {
-            'core': {
-                'ongoing': false,
-                'name': null,
-                'sound': true,
-                'version': VERSION,
-                'language': navigator.language || navigator.userLanguage || "en",
-            },
-            'events': {
-                'last_action': null,
-                'new_action': null,
-                'sub_action': null,
-                'monster': null,
-                'current_event': null
-            },
-            'stats': {
-                'best_score': 0,
-                'total_game': 0,
-                'best_floor': 0,
-                'total_room': 0,
-                'max_level': 0,
-                'potion_used': 0,
-                'fight_victory': 0,
-                'chest_open': 0,
-                'chest_trap': 0,
-                'chest_not_opened': 0,
-                'spirit_meet': 0,
-                'merchant_accepted': 0,
-                'merchant_refused': 0,
-            },
-            'character': {
-                'health': SETTINGS.data.health,
-                'health_max': SETTINGS.data.health_max,
-                'power': SETTINGS.data.power,
-                'stamina': SETTINGS.data.stamina,
-                'xp': SETTINGS.data.xp,
-                'xp_to': SETTINGS.data.xp_to,
-                'level': SETTINGS.data.level,
-                'floor': SETTINGS.data.floor,
-                'room': SETTINGS.data.room,
-                'item_potion': SETTINGS.data.item_potion,
-                'item_scroll': SETTINGS.data.item_scroll,
-                'item_mineral': SETTINGS.data.item_mineral,
-                'score': SETTINGS.data.score
-            }
-        }
-    
-        setStorage("TOWER-save", JSON.stringify(_game));
-    }
-    else {
-        _game = JSON.parse(getStorage("TOWER-save"));
+function getInventory(item) {
+    switch (item) {
+        case "potion":
+            return _game.character.item_potion;
+        case "scroll":
+            return _game.character.item_scroll;
+        case "mineral":
+            return _game.character.item_mineral;
     }
 }
 
 /**
- * Load all text content according the language
+ * Modify the number of one item of the inventory
  **/
 
-function loadLanguage() {
-    Object.keys(CONTENT.main).forEach(key => {
-        if (get("#" + key)) {
-            get("#" + key).innerHTML = CONTENT.main[key];
-        }
-    });
-
-    // Able to switch language between French and English
-    if (get("#switch_language")) {
-        get("#switch_language").addEventListener("click", () => {
-            _game.core.language = (_game.core.language == "fr") ? "en" : "fr";
-            setStorage("TOWER-save", JSON.stringify(_game));
-            location.reload();
-        });
-    };
+function modifyInventory(item, modifier, nb) {
+    switch (item) {
+        case "potion":
+            _game.character.item_potion = (modifier === "add" ) ? _game.character.item_potion + nb : _game.character.item_potion - nb;
+            break;
+        case "scroll":
+            _game.character.item_scroll = (modifier === "add" ) ? _game.character.item_scroll + nb : _game.character.item_scroll - nb;
+            break;
+        case "mineral":
+            _game.character.item_mineral = (modifier === "add" ) ? _game.character.item_mineral + nb : _game.character.item_mineral - nb;
+            break;
+    }
 }
 
 /**
- * Reset the game but keeps some data such as scores etc.
+ * Restore full health's player
  **/
 
-function resetGame() {
-    _game.core.ongoing = false;
-    _game.stats.total_game++;
-    _game.character.health = SETTINGS.data.health;
-    _game.character.health_max = SETTINGS.data.health_max;
-    _game.character.power = SETTINGS.data.power;
-    _game.character.stamina = SETTINGS.data.stamina;
-    _game.character.xp = SETTINGS.data.xp;
-    _game.character.xp_to = SETTINGS.data.xp_to;
-    _game.character.item_potion = SETTINGS.data.item_potion;
-    _game.character.item_scroll = SETTINGS.data.item_scroll;
-    _game.character.item_mineral = SETTINGS.data.item_mineral;
-    _game.character.level = SETTINGS.data.level;
-    _game.character.floor = SETTINGS.data.floor;
-    _game.character.room = SETTINGS.data.room;
-
-    setStorage("TOWER-save", JSON.stringify(_game))
+function restoreHealth() {
+    _game.character.health = _game.character.health_max;
 }
 
 /**
- * Restart manually the game
+ * Modify one stats of the player
  **/
 
-function restartGame() {
-    get("#blank_popup").style.display = "block";
-    get("#popup").style.display = "flex";
-    get("#popup_text").innerHTML = CONTENT.main.popup_restart;
-
-    get("#popup_cancel").addEventListener("click", () => {
-        get("#blank_popup").style.display = "none";
-        get("#popup").style.display = "none";
-    });
-
-    get("#popup_accept").addEventListener("click", () => {
-        clearInterval(_refresh_display);
-        _game.core.ongoing = false;
-        resetGame();
-        location.reload();
-    });
+function modifyHeroStat(stat, modifier, nb) {
+    switch (stat)  {
+        case "power":
+            _game.character.power = (modifier === "add") ? _game.character.power + nb : _game.character.power - nb;
+            break;
+        case "stamina":
+            _game.character.stamina = (modifier === "add") ? _game.character.stamina + nb : _game.character.stamina - nb;
+            break;
+        case "health_max":
+            _game.character.health_max = (modifier === "add") ? _game.character.health_max + nb : _game.character.health_max - nb;
+            break;
+        case "health": 
+            _game.character.health = (modifier === "add") ? _game.character.health + nb : _game.character.health - nb;
+            break;
+        case "experience":
+            _game.character.xp = (modifier === "add") ? _game.character.xp + nb : _game.character.xp - nb;
+            break;
+        case "experience_to":
+            _game.character.xp_to = (modifier === "add") ? _game.character.xp_to + nb : _game.character.xp_to - nb;
+            break;
+    }
 }
 
 /**
- * Delete all game data manually
+ * Return the modifier of one spirit
  **/
 
-function deleteSave() {
-    get("#blank_popup").style.display = "block";
-    get("#popup").style.display = "flex";
-    get("#popup_text").innerHTML = CONTENT.main.popup_delete;
+function getSpiritModifier(spirit) {
+    switch (spirit) {
+        case "power":
+            return SETTINGS.data.spirit_power;
+        case "health":
+            return SETTINGS.data.spirit_health;
+        case "stamina":
+            return SETTINGS.data.spirit_stamina;
+    }
+}
 
-    get("#popup_cancel").addEventListener("click", () => {
-        get("#blank_popup").style.display = "none";
-        get("#popup").style.display = "none";
-    });
+/**
+ * Increase the selected game stat
+ **/
 
-    get("#popup_accept").addEventListener("click", () => {
-        clearInterval(_refresh_display);
-        deleteStorage("TOWER-save");
-        location.reload();
-    });
+function increaseGameStat(stat) {
+    switch (stat) {
+        case "potion_used":
+            _game.stat.potion_used++;
+            break;
+        case "chest_open":
+            _game.stats.chest_open++;
+            break;
+        case "merchant_accepted":
+            _game.stats.merchant_accepted++;
+            break;
+        case "merchant_refused":
+            _game.stats.merchant_refused++;
+            break;
+    }
 }

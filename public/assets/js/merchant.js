@@ -1,4 +1,3 @@
-
 /**
  * Meeting with the merchant : exchange of minerals
  **/
