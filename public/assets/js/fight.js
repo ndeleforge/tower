@@ -24,7 +24,7 @@ function fight() {
 function chooseMonster() {
     const monster_health = rand(_game.character.floor * 2, _game.character.floor * 5);
     let monster_strenght = parseInt(rand(monster_health / 4, monster_health / 3));
-    if (monster_strenght <= 0) monster_strenght = 1;  // Can't be null or negative
+    if (monster_strenght <= 0) monster_strenght = 1;
 
     const monsters = [
         { health_threshold: 900, name: CONTENT.monsters.lich, image: SETTINGS.images.monster17 },
