@@ -1,17 +1,17 @@
-![Header](/docs/images/header.png)
-
-<div align="center">
+# Tower
 
 [![GitHub license](https://img.shields.io/github/license/ndeleforge/tower?style=for-the-badge)](https://github.com/ndeleforge/tower/blob/main/LICENCE)
 ![GitHub last commit](https://img.shields.io/github/last-commit/ndeleforge/tower?style=for-the-badge)
 [![GitHub forks](https://img.shields.io/github/forks/ndeleforge/tower?style=for-the-badge)](https://github.com/ndeleforge/tower/network)
 [![GitHub stars](https://img.shields.io/github/stars/ndeleforge/tower?style=for-the-badge)](https://github.com/ndeleforge/tower/stargazers)
 
+An infinite and simple RPG designed for mobile and playable in your browser.
+
+<div align="center">
+
+ ![Overview](docs/images/overview.gif)
+
 </div>
-
-# Overview
-
-![Overview](/docs/images/overview.gif)
 
 # Quick start
 
@@ -19,6 +19,10 @@
 - Install dependencies with `npm install`
 - Start the application with `npm start`
 - Go to [the local server](https://localhost:3001)
+
+# Docker setup
+
+To do.
 
 # Ressources
 
