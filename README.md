@@ -9,17 +9,12 @@ An infinite and simple RPG designed for mobile and playable in your browser.
 
 <div align="center">
 
- ![Overview](docs/images/overview.gif)
+![Screen1](docs/images/screen1.png)
+![Screen2](docs/images/screen2.png)
+![Screen3](docs/images/screen3.png)
+![Screen4](docs/images/screen4.png)
 
 </div>
-
-# Quick start
-
-To do.
-
-# Docker setup
-
-To do.
 
 # Ressources
 
