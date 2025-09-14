@@ -15,10 +15,7 @@ An infinite and simple RPG designed for mobile and playable in your browser.
 
 # Quick start
 
-- Git clone the project
-- Install dependencies with `npm install`
-- Start the application with `npm start`
-- Go to [the local server](https://localhost:3001)
+To do.
 
 # Docker setup
 

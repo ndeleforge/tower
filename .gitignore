@@ -1,2 +1,6 @@
-node_modules/
-build/
+# Environment files
+.env
+
+# Backend
+/backend/.venv
+/backend/__pycache__
