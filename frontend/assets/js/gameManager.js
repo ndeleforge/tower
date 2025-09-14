@@ -41,7 +41,6 @@ export function titleScreen() {
  **/
 
 export function startGame(mode) {
-    else if (mode == "load") 
     get('#title_screen').style.display = "none";
     get('#board').style.display = "flex";
 
