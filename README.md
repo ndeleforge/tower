@@ -8,12 +8,10 @@
 An infinite and simple RPG designed for mobile and playable in your browser.
 
 <div align="center">
-
-![Screen1](docs/images/screen1.png)
-![Screen2](docs/images/screen2.png)
-![Screen3](docs/images/screen3.png)
-![Screen4](docs/images/screen4.png)
-
+  <img src="docs/images/screen1.png" style="width:200px; margin:5px;" />
+  <img src="docs/images/screen2.png" style="width:200px; margin:5px" />
+  <img src="docs/images/screen3.png" style="width:200px; margin:5px" />
+  <img src="docs/images/screen4.png" style="width:200px; margin:5px" />
 </div>
 
 # Ressources
