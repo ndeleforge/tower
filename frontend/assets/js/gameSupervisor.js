@@ -1,5 +1,5 @@
 import { get, setStorage, getVariableCSS } from './utils.js'
-import { getGameStat, getHeroStat, getInventory, getLevelUpModifier, getSituation, resetExperience, restoreHealth, setEvent, setGameStat, setSituation, updateHeroStat } from './helper.js'
+import { getGameStat, getHeroStat, getInventory, getLevelUpModifier, getSituation, isLimited, resetExperience, restoreHealth, setEvent, setGameStat, setSituation, updateHeroStat } from './helper.js'
 import { SAVE } from '../main.js'
 import { Data, State } from './gameState.js'
 import { resetGame } from './saveManager.js'
@@ -77,6 +77,15 @@ function checkLevelUp() {
  **/
 
 function setHeader() {
+    // Return the count or the count in the red color if maxed
+    function renderCount(itemKey) {
+        const count = getInventory(itemKey)
+        if (isLimited(itemKey)) {
+            return `<span style="color:red">${count}</span>`
+        }
+        return count
+    }
+
     // Title
     get('#tower').innerHTML = `${Data.content.vocabulary.floor} ${getSituation("floor")} - ${Data.content.vocabulary.room} ${getSituation("room")}`;
 
@@ -93,9 +102,9 @@ function setHeader() {
     get("#stamina").innerHTML = `<img src="assets/image/${Data.settings.images.icon_stamina}" alt=""> ${getHeroStat("stamina")}`;
 
     // Items
-    get("#potion").innerHTML = `<img src="assets/image/${Data.settings.images.icon_potion}" alt=""> ${getInventory("potion")}`;
-    get("#scroll").innerHTML = `<img src="assets/image/${Data.settings.images.icon_scroll}" alt=""> ${getInventory("scroll")}`;
-    get("#mineral").innerHTML = `<img src="assets/image/${Data.settings.images.icon_mineral}" alt=""> ${getInventory("mineral")}`;
+    get("#potion").innerHTML = `<img src="assets/image/${Data.settings.images.icon_potion}" alt="">${renderCount("potion")}`;
+    get("#scroll").innerHTML = `<img src="assets/image/${Data.settings.images.icon_scroll}" alt=""> ${renderCount("scroll")}`;
+    get("#mineral").innerHTML = `<img src="assets/image/${Data.settings.images.icon_mineral}" alt=""> ${renderCount("mineral")}`;
 }
 
 /**

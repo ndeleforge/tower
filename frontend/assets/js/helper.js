@@ -136,6 +136,12 @@ export function updateInventory(item, modifier, nb) {
     modifyState(State.game.character, key, modifier, nb);
 }
 
+export function isLimited(item) {
+    const current = getInventory(item)
+    const limit = getInventory("item_limit")
+    return current + 1 >= limit
+}
+
 /** ----------------------------
  * Game stats
  * -----------------------------

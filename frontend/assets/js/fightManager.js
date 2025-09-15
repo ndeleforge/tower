@@ -28,7 +28,7 @@ export function fight() {
  **/
 
 function chooseMonster() {
-    const monster_health = rand(getSituation("floor") * 2, getSituation("floor") * 5);
+    const monster_health = rand(getSituation("floor") * 3, getSituation("floor") * 5);
     let monster_strenght = parseInt(rand(monster_health / 4, monster_health / 3));
     if (monster_strenght <= 0) monster_strenght = 1;
 

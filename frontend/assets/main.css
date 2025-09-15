@@ -341,6 +341,7 @@ header {
 #information {
     padding: 2vh;
     font-size: 2em;
+    user-select: none !important;
 }
 
 #information .important {

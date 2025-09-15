@@ -41,13 +41,14 @@ export function titleScreen() {
  **/
 
 export function startGame(mode) {
+    setRefresh();
+
     get('#title_screen').style.display = "none";
     get('#board').style.display = "flex";
 
     changeDisplay("normal");
     createInterface();
     addSoundToHTML();
-    setRefresh();
 
     if (mode == "new") {
         updateCoreData("name", get("#title_character").value);

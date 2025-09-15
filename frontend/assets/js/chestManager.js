@@ -1,5 +1,5 @@
 import { get, rand, plural } from './utils.js'
-import { getInventory, setEvent, updateGameStat, updateHeroStat, updateInventory } from './helper.js'
+import { getInventory, isLimited, setEvent, updateGameStat, updateHeroStat, updateInventory } from './helper.js'
 import { Data, State } from './gameState.js'
 import { changeDisplay, displayImage, displayParagraph } from './interfaceManager.js'
 import { playSound } from './soundManager.js'
@@ -35,11 +35,11 @@ export function openChest() {
 
     // Potion (11,12,13,14,15)
     if (loot > 10) {
-        if (getInventory("item_limit") > getInventory("potion")) {
-            updateInventory("potion", "add", 1)
+        if (isLimited("potion")) {
+            limited = true
         }
         else {
-            limited = true;
+            updateInventory("potion", "add", 1)
         }
 
         paragraph_1 = displayImage(Data.settings.images.chest_open);
@@ -49,11 +49,11 @@ export function openChest() {
 
     // Spell (6,7,8,9,10)
     else if (loot > 5) {
-        if (getInventory("item_limit") > getInventory("scroll")) {
-            updateInventory("scroll", "add", 1)
+        if (isLimited("scroll")) {
+            limited = true
         }
         else {
-            limited = true;
+            updateInventory("scroll", "add", 1)
         }
 
         paragraph_1 = displayImage(Data.settings.images.chest_open);
@@ -63,10 +63,11 @@ export function openChest() {
 
     // Mineral (2,3,4,5)
     else if (loot > 1) {
-        if (getInventory("item_limit") > getInventory("mineral")) {
-            updateInventory("mineral", "add", 1);
-        } else {
-            limited = true;
+        if (isLimited("mineral")) {
+            limited = true
+        }
+        else {
+            updateInventory("mineral", "add", 1)
         }
 
         paragraph_1 = displayImage(Data.settings.images.chest_open);
