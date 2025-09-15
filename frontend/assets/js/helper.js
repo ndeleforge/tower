@@ -20,8 +20,13 @@ const inventoryMap = {
     potion: "item_potion",
     scroll: "item_scroll",
     mineral: "item_mineral",
-    item_limit: "item_limit"
 };
+
+const inventoryLimitMap = {
+    potion: "limit_potion",
+    scroll: "limit_scroll",
+    mineral: "limit_mineral"
+}
 
 const gameStatsMap = {
     best_score: "best_score",
@@ -128,18 +133,17 @@ export function getInventory(item) {
     return key ? State.game?.character?.[key] ?? 0 : 0;
 }
 
+export function getInventoryLimit(item) {
+    const key = inventoryLimitMap[item];
+    return key ? State.game?.character?.[key] ?? 0 : 0;
+}
+
 export function updateInventory(item, modifier, nb) {
     if (!State.game.character) State.game.character = {};
     const key = inventoryMap[item];
     if (!key) return;
     if (!(key in State.game.character)) State.game.character[key] = 0;
     modifyState(State.game.character, key, modifier, nb);
-}
-
-export function isLimited(item) {
-    const current = getInventory(item)
-    const limit = getInventory("item_limit")
-    return current + 1 >= limit
 }
 
 /** ----------------------------

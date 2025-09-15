@@ -41,10 +41,12 @@
         "experience": 0,
         "experience_to": 100,
         "level": 1,
-        "item_limit": 5,
         "item_potion": 0,
+        "limit_potion": 5,
         "item_scroll": 0,
-        "item_mineral": 0
+        "limit_scroll": 5,
+        "item_mineral": 0,
+        "limit_mineral": 3
     },
     "modifier": {
         "level_up_health": 20,

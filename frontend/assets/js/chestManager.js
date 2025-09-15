@@ -1,5 +1,5 @@
 import { get, rand, plural } from './utils.js'
-import { getInventory, isLimited, setEvent, updateGameStat, updateHeroStat, updateInventory } from './helper.js'
+import { getInventory, getInventoryLimit, setEvent, updateGameStat, updateHeroStat, updateInventory } from './helper.js'
 import { Data, State } from './gameState.js'
 import { changeDisplay, displayImage, displayParagraph } from './interfaceManager.js'
 import { playSound } from './soundManager.js'
@@ -35,7 +35,7 @@ export function openChest() {
 
     // Potion (11,12,13,14,15)
     if (loot > 10) {
-        if (isLimited("potion")) {
+        if (getInventory("potion") >= getInventoryLimit("potion")) {
             limited = true
         }
         else {
@@ -49,7 +49,7 @@ export function openChest() {
 
     // Spell (6,7,8,9,10)
     else if (loot > 5) {
-        if (isLimited("scroll")) {
+        if (getInventory("scroll") >= getInventoryLimit("scroll")) {
             limited = true
         }
         else {
@@ -63,7 +63,7 @@ export function openChest() {
 
     // Mineral (2,3,4,5)
     else if (loot > 1) {
-        if (isLimited("mineral")) {
+        if (getInventory("mineral") >= getInventoryLimit("mineral")) {
             limited = true
         }
         else {
