@@ -1,10 +1,5 @@
 # Tower
 
-[![GitHub license](https://img.shields.io/github/license/ndeleforge/tower?style=for-the-badge)](https://github.com/ndeleforge/tower/blob/main/LICENCE)
-![GitHub last commit](https://img.shields.io/github/last-commit/ndeleforge/tower?style=for-the-badge)
-[![GitHub forks](https://img.shields.io/github/forks/ndeleforge/tower?style=for-the-badge)](https://github.com/ndeleforge/tower/network)
-[![GitHub stars](https://img.shields.io/github/stars/ndeleforge/tower?style=for-the-badge)](https://github.com/ndeleforge/tower/stargazers)
-
 An infinite and simple RPG designed for mobile and playable in your browser.
 
 <div align="center">
