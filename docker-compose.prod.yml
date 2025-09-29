@@ -1,0 +1,21 @@
+services:
+  tower:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tower
+    ports:
+      - "5900:5000"
+    environment:
+      APP_ENV: production
+    restart: unless-stopped
+
+  tower-cloudflared:
+    image: cloudflare/cloudflared:${CLOUDFLARED_TAG}
+    container_name: tower-cloudflared
+    command: tunnel run
+    environment:
+      TUNNEL_TOKEN: ${CLOUDFLARED_TOKEN}
+    depends_on:
+      - tower
+    restart: unless-stopped

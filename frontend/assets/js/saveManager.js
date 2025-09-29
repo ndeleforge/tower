@@ -1,7 +1,7 @@
 import { get, getStorage, setStorage, deleteStorage } from "./utils.js"
 import { setSituation, updateCoreData, updateGameStat } from "./helper.js"
-import { SAVE } from "../main.js";
 import { Data, State } from "./gameState.js";
+import { SAVE } from "../main.js";
 
 /**
  * Parse existing game data or create new data

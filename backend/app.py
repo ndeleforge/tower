@@ -8,7 +8,7 @@ from routes import routes
 # ------------------ Configuration ------------------
 
 APP_VERSION = "2025.09"
-APP_ENV = os.getenv("APP_ENV", "dev")
+APP_ENV = os.getenv("APP_ENV", "development")
 
 if APP_ENV == "production":
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))

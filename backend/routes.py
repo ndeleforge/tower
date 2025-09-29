@@ -1,5 +1,5 @@
 import os
-from core import load_json_file
+from utils import load_json_file
 from flask import Blueprint, current_app, send_from_directory, jsonify
 
 routes = Blueprint("routes", __name__)
