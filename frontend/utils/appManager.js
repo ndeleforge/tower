@@ -37,13 +37,13 @@ export async function loadSettings() {
  * Load the content from backend
  **/
 
-export async function loadLanguage() {
+export async function loadContent() {
     const lang = (State.game.core.language == "fr-FR") ? 'fr' : 'en';
     const url = `/api/locale/${lang}`
     const response = await fetch(`${backendUrl}${url}`);
 
     if (!response.ok) {
-        console.error("Impossible to load language");
+        console.error("Impossible to load content");
         return;
     }
     Data.content = await response.json();
