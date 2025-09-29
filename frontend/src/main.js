@@ -1,3 +1,4 @@
+/*
 import { get, loadHTML } from './js/utils.js';
 import { getCoreData } from './js/helper.js';
 import { loadLanguage, loadSettings, loadVersion, populateLang } from './js/appManager.js';
@@ -28,3 +29,14 @@ async function main() {
 }
 
 main()
+*/
+
+import { createApp } from 'vue'
+import App from './App.vue'
+import Toast from 'vue-toastification'
+import 'vue-toastification/dist/index.css'
+import './style.css'
+
+const app = createApp(App)
+app.use(Toast)
+app.mount('#app')

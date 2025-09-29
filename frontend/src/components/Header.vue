@@ -1,0 +1,12 @@
+<template>
+    <header>
+        <span id="tower"></span>
+        <button class="button" id="open_menu"><img id="open_menu_img"></button>
+    </header>
+</template>
+
+<script setup>
+</script>
+
+<style scoped>
+</style>

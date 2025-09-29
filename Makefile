@@ -2,12 +2,17 @@
 
 local-init:
 	cd backend && python3 -m venv .venv && . .venv/bin/activate && pip install -r requirements.txt
+	cd frontend && npm install
 
 local-dev:
-	cd backend && . .venv/bin/activate && python app.py
+	cd backend && . .venv/bin/activate && python app.py & \
+	BACKEND_PID=$$!; \
+	trap "kill $$BACKEND_PID" INT TERM EXIT; \
+	cd frontend && npm run dev
 
 local-clean:
 	rm -rf backend/.venv backend/__pycache__ 
+	rm -rf frontend/dist frontend/node_modules
 
 build-dev:
 	docker compose up -d --build
