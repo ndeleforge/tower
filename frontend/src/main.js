@@ -8,13 +8,7 @@ import { loadData } from './js/saveManager.js';
 export const SAVE = "TowerData";
 
 async function loadApp() {
-    const app = get('#app');
-    
-    await loadHTML('templates/header.html', app);
-    await loadHTML('templates/titlescreen.html', app);
-    await loadHTML('templates/gamescreen.html', app);
-    await loadHTML('templates/menu.html', app);
-    await loadHTML('templates/popup.html', app);
+
 
     await loadVersion();
     await loadSettings();

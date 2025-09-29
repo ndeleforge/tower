@@ -59,40 +59,6 @@ export function plural(quantity, singular, plural) {
     }
 }
 
-/**
- *  Get a local storage
- * @param {string} name name of the local storage
- * @return value of the local storage
- **/
-
-export function getStorage(name) {
-    if (name && localStorage.getItem(name)) {
-        return localStorage.getItem(name);
-    }
-}
-
-/**
- *  Set a local storage
- * @param {string} name name of the local storage
- * @param {string} value value of the local storage
- **/
-
-export function setStorage(name, value) {
-    if (name && value) {
-        localStorage.setItem(name, value);
-    }
-}
-
-/**
- *  Remove a local storage
- * @param {string} name name of the local storage
- **/
-
-export function deleteStorage(name) {
-    if (name && localStorage.getItem(name)) {
-        localStorage.removeItem(name);
-    }
-}
 
 /**
  *  Return the value of the CSS variable given

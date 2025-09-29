@@ -1,7 +1,7 @@
-import { get, getStorage, setStorage, deleteStorage } from "./utils.js"
 import { setSituation, updateCoreData, updateGameStat } from "./helper.js"
 import { Data, State } from "./gameState.js";
-import { SAVE } from "../main.js";
+
+export const SAVE = "TowerData";
 
 /**
  * Parse existing game data or create new data
@@ -88,4 +88,39 @@ export function deleteSave() {
         deleteStorage(SAVE);
         location.reload();
     });
+}
+
+/**
+ *  Get a local storage
+ * @param {string} name name of the local storage
+ * @return value of the local storage
+ **/
+
+export function getStorage(name) {
+    if (name && localStorage.getItem(name)) {
+        return localStorage.getItem(name);
+    }
+}
+
+/**
+ *  Set a local storage
+ * @param {string} name name of the local storage
+ * @param {string} value value of the local storage
+ **/
+
+export function setStorage(name, value) {
+    if (name && value) {
+        localStorage.setItem(name, value);
+    }
+}
+
+/**
+ *  Remove a local storage
+ * @param {string} name name of the local storage
+ **/
+
+export function deleteStorage(name) {
+    if (name && localStorage.getItem(name)) {
+        localStorage.removeItem(name);
+    }
 }

@@ -1,5 +1,6 @@
-import { get } from './utils.js'
 import { Data, State } from './gameState.js'
+
+const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'
 
 /**
  * Load the app version from backend
@@ -7,15 +8,14 @@ import { Data, State } from './gameState.js'
 
 export async function loadVersion() {
     const url = "/api/version"
-    const response = await fetch(url);
+    const response = await fetch(`${backendUrl}${url}`);
 
     if (!response.ok) {
         console.error("Impossible to load app version");
         return;
     }
 
-    const data = await response.json();
-    Data.version = data.version;
+    Data.version = await response.json();
 }
 
 /**
@@ -24,7 +24,7 @@ export async function loadVersion() {
 
 export async function loadSettings() {
     const url = "/api/settings"
-    const response = await fetch(url);
+    const response = await fetch(`${backendUrl}${url}`);
 
     if (!response.ok) {
         console.error("Impossible to load settings");
@@ -40,7 +40,7 @@ export async function loadSettings() {
 export async function loadLanguage() {
     const lang = (State.game.core.language == "fr-FR") ? 'fr' : 'en';
     const url = `/api/locale/${lang}`
-    const response = await fetch(url);
+    const response = await fetch(`${backendUrl}${url}`);
 
     if (!response.ok) {
         console.error("Impossible to load language");
@@ -51,7 +51,7 @@ export async function loadLanguage() {
 
 /**
  * Populate all text content according the language
- **/
+
 
 export function populateLang() {
     Object.keys(Data.content.main).forEach(key => {
@@ -60,3 +60,4 @@ export function populateLang() {
         }
     });
 }
+ **/
