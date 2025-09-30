@@ -12,12 +12,10 @@
         <h1 id="stats_title" class="menu_title">{{  Data.content?.main?.stats_title }}</h1>
         <ul id="list_stats"></ul>
 
-        <p id="menu_footer">{{  Data.content?.main.menu_footer }}</p>
+        <p id="menu_footer">{{  Data.content?.main?.menu_footer }}</p>
     </div>
 </template>
 
 <script setup>
 import { Data } from '../../utils/appState.js'
-import { Interface } from '../../utils/appState.js'
-
 </script>

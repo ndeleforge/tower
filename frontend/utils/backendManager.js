@@ -31,6 +31,7 @@ export async function loadSettings() {
         return;
     }
     Data.settings = await response.json();
+    console.log("Settings:", Data.settings);
 }
 
 /**
@@ -48,5 +49,4 @@ export async function loadContent() {
         return;
     }
     Data.content = await response.json();
-    console.log("Content loaded : ", Data.content);
 }

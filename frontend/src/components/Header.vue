@@ -1,9 +1,8 @@
 <template>
     <header>
         <span class="tower">{{  Data.content?.main?.title }}</span>
-        <button v-if="Interface.screen === 'game'" class="button">
-            <img 
-                :src="Data.settings?.images?.menu_closed" />
+        <button v-if="Interface.screen === 'game'" class="button open_menu">
+            <img :src="Data.settings.images.menu_closed" />
         </button>
     </header>
 </template>
@@ -29,11 +28,25 @@ header {
     text-align: center;
 }
 
+.open_menu {
+    padding: 1vh;
+    transition: none;
+    background-color: transparent;
+}
+
 @media (max-width:1024px) {
     header {
         border-radius: 0;
         font-size: 1.5em;
         letter-spacing: 2px;
+    }
+
+    .open_menu {
+        width: 10vw;
+    }
+
+    .open_menu img {
+        width: 100%;
     }
 }
 </style>

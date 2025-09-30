@@ -19,6 +19,7 @@
 import { watch, ref } from 'vue'
 import { Data, State } from '../../utils/appState.js'
 import { Interface } from '../../utils/appState.js'
+import { setCoreData } from '../../utils/appHelper.js'
 
 const characterName = ref('')
 const tip = ref('')
@@ -35,7 +36,7 @@ function startGame() {
         return
     }
 
-    State.game.core.name = characterName.value.trim()
+    setCoreData("name", characterName.value.trim())
     Interface.screen = 'game'
 }
 
@@ -126,6 +127,11 @@ watch(
 
     .input {
         width: 80vw;
+    }
+
+    .play {
+        min-width: 50vw;
+        font-size: 1.2em;
     }
 
     .play {

@@ -19,7 +19,6 @@ import { Interface } from '../utils/appState.js';
 import { loadContent, loadSettings, loadVersion } from '../utils/backendManager.js';
 import { loadSave } from '../utils/saveManager';
 
-
 onMounted(async () => {
     try {
         await loadVersion();

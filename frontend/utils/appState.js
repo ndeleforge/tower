@@ -2,8 +2,8 @@ import { reactive } from 'vue'
 
 export const Data = reactive({
     version: null,
-    settings: null,
-    content: null
+    settings: {},
+    content: {}
 })
 
 export const Interface = reactive({

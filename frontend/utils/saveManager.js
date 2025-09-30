@@ -1,4 +1,4 @@
-import { setSituation, setCoreData, updateGameStat } from "./helper.js"
+import { setSituation, setCoreData, updateGameStat } from "./appHelper.js"
 import { Data, State } from "./appState.js";
 import { watch } from "vue";
 
@@ -37,8 +37,6 @@ export async function loadSave() {
     else {
         Object.assign(State.game, JSON.parse(saved))
     }
-
-    console.log("Loaded game data:", saved ? JSON.parse(saved) : State.game);
 }
 
 /**

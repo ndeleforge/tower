@@ -78,20 +78,16 @@ function modifyState(target, key, modifier, value) {
  */
 export function getHeroStat(stat) {
     const key = heroStatsMap[stat];
-    return key ? State.game?.character?.[key] ?? 0 : 0;
+    return State.game.character[key];
 }
 
 export function setHeroStat(stat, value) {
-    if (!State.game.character) State.game.character = {};
     const key = heroStatsMap[stat];
-    if (!key) return;
     State.game.character[key] = value;
 }
 
 export function updateHeroStat(stat, modifier, nb) {
-    if (!State.game.character) State.game.character = {};
     const key = heroStatsMap[stat];
-    if (!key) return;
     if (!(key in State.game.character)) State.game.character[key] = 0;
     modifyState(State.game.character, key, modifier, nb);
 }
@@ -102,20 +98,16 @@ export function updateHeroStat(stat, modifier, nb) {
  */
 export function getSituation(data) {
     const key = gameSituationMap[data];
-    return key ? State.game?.situation?.[key] ?? 0 : 0;
+    return State.game.situation[key];
 }
 
 export function setSituation(data, value) {
-    if (!State.game.situation) State.game.situation = {};
     const key = gameSituationMap[data];
-    if (!key) return;
     State.game.situation[key] = value;
 }
 
 export function updateSituation(data, modifier, nb) {
-    if (!State.game.situation) State.game.situation = {};
     const key = gameSituationMap[data];
-    if (!key) return;
     if (!(key in State.game.situation)) State.game.situation[key] = 0;
     modifyState(State.game.situation, key, modifier, nb);
 }
@@ -126,18 +118,16 @@ export function updateSituation(data, modifier, nb) {
  */
 export function getInventory(item) {
     const key = inventoryMap[item];
-    return key ? State.game?.character?.[key] ?? 0 : 0;
+    return State.game.character[key];
 }
 
 export function getInventoryLimit(item) {
     const key = inventoryLimitMap[item];
-    return key ? State.game?.character?.[key] ?? 0 : 0;
+    return State.game.character[key];
 }
 
 export function updateInventory(item, modifier, nb) {
-    if (!State.game.character) State.game.character = {};
     const key = inventoryMap[item];
-    if (!key) return;
     if (!(key in State.game.character)) State.game.character[key] = 0;
     modifyState(State.game.character, key, modifier, nb);
 }
@@ -148,20 +138,16 @@ export function updateInventory(item, modifier, nb) {
  */
 export function getGameStat(stat) {
     const key = gameStatsMap[stat];
-    return key ? State.game?.stats?.[key] ?? 0 : 0;
+    return State.game.stats[key];
 }
 
 export function setGameStat(stat, value) {
-    if (!State.game.stats) State.game.stats = {};
     const key = gameStatsMap[stat];
-    if (!key) return;
     State.game.stats[key] = value;
 }
 
 export function updateGameStat(stat) {
-    if (!State.game.stats) State.game.stats = {};
     const key = gameStatsMap[stat];
-    if (!key) return;
     if (!(key in State.game.stats)) State.game.stats[key] = 0;
     State.game.stats[key]++;
 }
@@ -171,7 +157,7 @@ export function updateGameStat(stat) {
  * -----------------------------
  */
 export function getEvent(type) {
-    return validEvents[type] ? State.game?.events?.[type] ?? null : null;
+    return State.game.events[type];
 }
 
 export function setEvent(type, event) {
@@ -182,7 +168,7 @@ export function setEvent(type, event) {
     if (allowed.length > 0) {
         State.game.events[type] = allowed.includes(event) ? event : null;
     } else {
-        State.game.events[type] = event || null;
+        State.game.events[type] = event;
     }
 }
 
@@ -190,12 +176,12 @@ export function setEvent(type, event) {
  * Core data
  * -----------------------------
  */
+
 export function getCoreData(core_data) {
-    return State.game?.core?.[core_data] ?? null;
+    return State.game.core[core_data];
 }
 
 export function setCoreData(core_data, value) {
-    if (!State.game.core) State.game.core = {};
     State.game.core[core_data] = value;
 }
 
@@ -203,6 +189,7 @@ export function setCoreData(core_data, value) {
  * Health & Experience
  * -----------------------------
  */
+
 export function restoreHealth() {
     setHeroStat("health", getHeroStat("health_max"));
 }
@@ -216,12 +203,13 @@ export function resetExperience() {
  * Modifiers
  * -----------------------------
  */
+
 export function getSpiritModifier(stat) {
     const key = spiritModifiers[stat];
-    return key ? Data.settings.modifier?.[key] ?? 0 : 0;
+    return Data.settings.modifier[key];
 }
 
 export function getLevelUpModifier(stat) {
     const key = levelUpModifiers[stat];
-    return key ? Data.settings.modifier?.[key] ?? 0 : 0;
+    return Data.settings.modifie[key];
 }
