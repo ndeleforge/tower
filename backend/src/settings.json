@@ -66,8 +66,8 @@
         "sound_floor": "floor"
     },
     "images": {
-        "menu_closed": "assets/image/icon/book_closed.png",
-        "menu_opened": "assets/image/icon/book_opened.png",
+        "menu_closed": "image/icon/book_closed.png",
+        "menu_opened": "image/icon/book_opened.png",
         "start": "event/first_floor.png",
         "no_event": "event/no_event.png",
         "chest": "event/chest.png",

@@ -27,13 +27,6 @@ def get_translation(lang):
     locales_dir = os.path.join(os.path.dirname(__file__), "locales")
     return load_json_file(locales_dir, f"{lang}.json", "Language not found")
 
-
-@routes.route("/api/state", methods=["GET"])
-def get_state():
-    src_dir = os.path.join(os.path.dirname(__file__), "src")
-    return load_json_file(src_dir, "state.json", "State not found")
-
-
 @routes.route("/api/settings", methods=["GET"])
 def get_settings():
     src_dir = os.path.join(os.path.dirname(__file__), "src")

@@ -1,27 +1,44 @@
-import { setSituation, updateCoreData, updateGameStat } from "./helper.js"
-import { Data, State } from "./gameState.js";
+import { setSituation, setCoreData, updateGameStat } from "./helper.js"
+import { Data, State } from "./appState.js";
+import { watch } from "vue";
 
 export const SAVE = "TowerData";
+
+/**
+ * Automatic save on each change of the State object
+ **/
+
+watch(
+    State.game,
+    (newState) => {
+        setStorage(SAVE, JSON.stringify(newState))
+    },
+    { deep: true, immediate: false }
+)
 
 /**
  * Parse existing game data or create new data
  **/
 
-export async function loadData() {
-    if (getStorage(SAVE)) {
-        State.game = JSON.parse(getStorage(SAVE));
-    }
-    else {
-        State.game = {
+export async function loadSave() {
+    const saved = getStorage(SAVE)
+
+    if (!saved) {
+        Object.assign(State.game, {
             core: { ...Data.settings.core },
             events: { ...Data.settings.events },
             stats: { ...Data.settings.stats },
             situation: { ...Data.settings.situation },
             character: { ...Data.settings.character }
-        };
+        })
 
-        setStorage(SAVE, JSON.stringify(State.game));
+        setCoreData("language", navigator.language || 'en-US');
     }
+    else {
+        Object.assign(State.game, JSON.parse(saved))
+    }
+
+    console.log("Loaded game data:", saved ? JSON.parse(saved) : State.game);
 }
 
 /**
@@ -36,7 +53,7 @@ export async function resetGame() {
 
     const keysToReset = [
         "health", "health_max", "level",
-        "power", "stamina", "experience", "experience_to", 
+        "power", "stamina", "experience", "experience_to",
         "item_potion", "item_scroll", "item_mineral",
     ];
 
@@ -73,7 +90,7 @@ export function restartGame() {
  * Delete all game data manually
  **/
 
-export function deleteSave() {
+export function deleteGame() {
     get("#blank_popup").style.display = "block";
     get("#popup").style.display = "flex";
     get("#popup_text").innerHTML = Data.content.main.popup_delete;
@@ -90,37 +107,18 @@ export function deleteSave() {
     });
 }
 
-/**
- *  Get a local storage
- * @param {string} name name of the local storage
- * @return value of the local storage
- **/
+export function getStorage(key) {
+    return key != null ? localStorage.getItem(key) : null
+}
 
-export function getStorage(name) {
-    if (name && localStorage.getItem(name)) {
-        return localStorage.getItem(name);
+export function setStorage(key, value) {
+    if (key != null && value != null) {
+        localStorage.setItem(key, value)
     }
 }
 
-/**
- *  Set a local storage
- * @param {string} name name of the local storage
- * @param {string} value value of the local storage
- **/
-
-export function setStorage(name, value) {
-    if (name && value) {
-        localStorage.setItem(name, value);
-    }
-}
-
-/**
- *  Remove a local storage
- * @param {string} name name of the local storage
- **/
-
-export function deleteStorage(name) {
-    if (name && localStorage.getItem(name)) {
-        localStorage.removeItem(name);
+export function deleteStorage(key) {
+    if (key != null) {
+        localStorage.removeItem(key)
     }
 }

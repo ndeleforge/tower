@@ -6,9 +6,8 @@
 
         <form @submit.prevent="startGame">
             <input class="input" type="text" v-model="characterName"
-                pattern="^[A-Za-z' -]{2,25}(?:[ -][A-Za-z' -]{2,25})?$" required
                 :placeholder="Data.content?.main?.title_character_placeholder">
-            <button id="play" type="submit">{{ Data.content?.main?.play }}</button>
+            <button class="play" type="submit" @click="startGame">{{ Data.content?.main?.play }}</button>
         </form>
 
         <p class="tip">{{ tip }}</p>
@@ -17,35 +16,50 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
-import { Data, State } from '../../utils/gameState.js'
+import { watch, ref } from 'vue'
+import { Data, State } from '../../utils/appState.js'
+import { Interface } from '../../utils/appState.js'
 
 const characterName = ref('')
 const tip = ref('')
 
-onMounted(() => {
-    setTimeout(() => chooseTip(), 300); // to improve with async loading
-})
-
 // Add something to put the input in red if the pattern is not respected
 
-// Add something to display the name if saved
-
-function chooseTip() {
-    if (Data.content?.tips?.length) {
-        const tipsArray = Data.content.tips
-        const randomIndex = Math.floor(Math.random() * tipsArray.length)
-        tip.value = tipsArray[randomIndex]
-    }
+function isValidName(name) {
+    const regex = /^[A-Za-z' -]{2,25}(?:[ -][A-Za-z' -]{2,25})?$/
+    return regex.test(name)
 }
 
 function startGame() {
-    if (characterName.value.trim().length >= 2) {
-        State.character.name = characterName.value.trim()
-        State.currentScreen = 'game'
-        State.gameMode = 'new'
+    if (!isValidName(characterName.value)) {
+        return
     }
+
+    State.game.core.name = characterName.value.trim()
+    Interface.screen = 'game'
 }
+
+watch(
+    () => State.game?.core?.name,
+    (name) => {
+        if (name) {
+            characterName.value = name
+        }
+    },
+    { immediate: true }
+)
+
+watch(
+    () => Data.content,
+    (content) => {
+        if (content?.tips?.length) {
+            const random = Math.floor(Math.random() * content.tips.length)
+            tip.value = content.tips[random]
+        }
+    },
+    { immediate: true }
+)
+
 </script>
 
 <style scoped>
@@ -55,7 +69,6 @@ function startGame() {
     text-align: center;
     font-size: 1.2em;
 }
-
 
 .logo {
     width: 30%;
@@ -82,6 +95,13 @@ function startGame() {
     background-color: var(--start-input-background);
 }
 
+.play {
+    width: 15vw;
+    border-radius: 40px;
+    text-transform: uppercase;
+    font-size: 1.5em;
+}
+
 .tip {
     display: flex;
     flex-direction: column;
@@ -106,6 +126,11 @@ function startGame() {
 
     .input {
         width: 80vw;
+    }
+
+    .play {
+        min-width: 50vw;
+        font-size: 1.2em;
     }
 
     .tip {

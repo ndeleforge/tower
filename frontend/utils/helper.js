@@ -1,4 +1,4 @@
-import { State, Data } from "./gameState.js";
+import { State, Data } from "./appState.js";
 
 const heroStatsMap = {
     level: "level",
@@ -64,10 +64,9 @@ const levelUpModifiers = {
 };
 
 /** ----------------------------
- * Generic helper
+ * Helper
  * -----------------------------
  */
-
 function modifyState(target, key, modifier, value) {
     if (!target.hasOwnProperty(key)) return;
     target[key] += modifier === "add" ? value : -value;
@@ -77,7 +76,6 @@ function modifyState(target, key, modifier, value) {
  * Hero stats
  * -----------------------------
  */
-
 export function getHeroStat(stat) {
     const key = heroStatsMap[stat];
     return key ? State.game?.character?.[key] ?? 0 : 0;
@@ -102,7 +100,6 @@ export function updateHeroStat(stat, modifier, nb) {
  * Game situation
  * -----------------------------
  */
-
 export function getSituation(data) {
     const key = gameSituationMap[data];
     return key ? State.game?.situation?.[key] ?? 0 : 0;
@@ -127,7 +124,6 @@ export function updateSituation(data, modifier, nb) {
  * Inventory
  * -----------------------------
  */
-
 export function getInventory(item) {
     const key = inventoryMap[item];
     return key ? State.game?.character?.[key] ?? 0 : 0;
@@ -150,7 +146,6 @@ export function updateInventory(item, modifier, nb) {
  * Game stats
  * -----------------------------
  */
-
 export function getGameStat(stat) {
     const key = gameStatsMap[stat];
     return key ? State.game?.stats?.[key] ?? 0 : 0;
@@ -175,7 +170,6 @@ export function updateGameStat(stat) {
  * Events
  * -----------------------------
  */
-
 export function getEvent(type) {
     return validEvents[type] ? State.game?.events?.[type] ?? null : null;
 }
@@ -196,35 +190,32 @@ export function setEvent(type, event) {
  * Core data
  * -----------------------------
  */
-
 export function getCoreData(core_data) {
     return State.game?.core?.[core_data] ?? null;
 }
 
-export function updateCoreData(core_data, value) {
+export function setCoreData(core_data, value) {
     if (!State.game.core) State.game.core = {};
     State.game.core[core_data] = value;
 }
 
 /** ----------------------------
- * Health and experience
+ * Health & Experience
  * -----------------------------
  */
-
 export function restoreHealth() {
     setHeroStat("health", getHeroStat("health_max"));
 }
 
 export function resetExperience() {
     setHeroStat("experience", 0);
-    setHeroStat("experience_to", parseInt(getHeroStat("experience_to") * 1.20));
+    setHeroStat("experience_to", parseInt(getHeroStat("experience_to") * 1.2));
 }
 
 /** ----------------------------
- * Modifiers and base stats
+ * Modifiers
  * -----------------------------
  */
-
 export function getSpiritModifier(stat) {
     const key = spiritModifiers[stat];
     return key ? Data.settings.modifier?.[key] ?? 0 : 0;

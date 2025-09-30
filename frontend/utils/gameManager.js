@@ -9,33 +9,6 @@ import { fight } from './fightManager.js'
 import { noEvent, spirit } from './eventsManager.js'
 
 /**
- * Display the screen title : show tip and allow new game
- **/
-
-export function titleScreen() {
-    get("#title_screen").style.display = "flex";
-    get('#title_tip').innerHTML = Data.content.tips[rand(0, Data.content.tips.length)];
-
-    if (getCoreData("name") != null && getCoreData("name") != "") {
-        get("#title_character").value = getCoreData("name");
-    }
-    else {
-        get("#title_character").value = "";
-        get('#title_character').placeholder = Data.content.main.title_character_placeholder;
-        get('#title_character').focus();
-    }
-
-    get("#play").addEventListener("click", () => {
-        if (get("#title_character").checkValidity()) {
-            startGame("new");
-        }
-        else {
-            get("#title_character").style.borderColor = getVariableCSS("error-color");
-        }
-    });
-}
-
-/**
  *  Display the game screen,  create menu and buttons
  * @param {string} mode "new" to start a new game or "load" to load an existing game
  **/

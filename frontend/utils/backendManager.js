@@ -1,4 +1,4 @@
-import { Data, State } from './gameState.js'
+import { Data, State } from './appState.js'
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'
 
@@ -39,6 +39,7 @@ export async function loadSettings() {
 
 export async function loadContent() {
     const lang = (State.game.core.language == "fr-FR") ? 'fr' : 'en';
+
     const url = `/api/locale/${lang}`
     const response = await fetch(`${backendUrl}${url}`);
 
@@ -47,17 +48,5 @@ export async function loadContent() {
         return;
     }
     Data.content = await response.json();
+    console.log("Content loaded : ", Data.content);
 }
-
-/**
- * Populate all text content according the language
-
-
-export function populateLang() {
-    Object.keys(Data.content.main).forEach(key => {
-        if (get("#" + key)) {
-            get("#" + key).innerHTML = Data.content.main[key];
-        }
-    });
-}
- **/
