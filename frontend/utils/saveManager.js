@@ -9,7 +9,7 @@ export const SAVE = "TowerData";
  **/
 
 watch(
-    State.game,
+    State,
     (newState) => {
         setStorage(SAVE, JSON.stringify(newState))
     },
@@ -24,7 +24,7 @@ export async function loadSave() {
     const saved = getStorage(SAVE)
 
     if (!saved) {
-        Object.assign(State.game, {
+        Object.assign(State, {
             core: { ...Data.settings.core },
             events: { ...Data.settings.events },
             stats: { ...Data.settings.stats },
@@ -35,7 +35,7 @@ export async function loadSave() {
         setCoreData("language", navigator.language || 'en-US');
     }
     else {
-        Object.assign(State.game, JSON.parse(saved))
+        Object.assign(State, JSON.parse(saved))
     }
 }
 

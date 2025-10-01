@@ -11,7 +11,6 @@ export async function initSound() {
             Sounds[sound] = audio
         }
     })
-    console.log("Sounds initialized:", Object.keys(Sounds));
 }
 
 // Play a sound by its name

@@ -1,5 +1,5 @@
 <template>
-    <div class="container screen">
+    <div class="screen">
         <img class="logo" src="/image/event/tower.png" alt="Logo">
 
         <h1 class="title">{{ Data.content?.main?.title_text }}</h1>
@@ -17,8 +17,7 @@
 
 <script setup>
 import { watch, ref } from 'vue'
-import { Data, State } from '../../utils/appState.js'
-import { Interface } from '../../utils/appState.js'
+import { Data, State, Interface } from '../../utils/appState.js'
 import { setCoreData, setEvent } from '../../utils/appHelper.js'
 import { playSound } from '../../utils/soundManager.js'
 
@@ -50,7 +49,7 @@ function startGame() {
 
 // Fill the input with the name from the save if it exists
 watch(
-    () => State.game?.core?.name,
+    () => State.core?.name,
     (name) => {
         if (name) {
             characterName.value = name
@@ -75,6 +74,8 @@ watch(
 <style scoped>
 .screen {
     display: flex;
+    flex-direction: column;
+    flex-grow: 1;
     align-items: unset !important;
     text-align: center;
     font-size: 1.2em;

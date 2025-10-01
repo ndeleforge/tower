@@ -1,19 +1,18 @@
 <template>
-    <div class="container information" v-show="Interface.subscreen === 'information'"></div>
+    <div class="information" v-show="Interface.subscreen === 'information'"></div>
 
-    <div class="container board" v-show="Interface.subscreen === 'board'">
+    <div class="game" v-show="Interface.subscreen === 'board'">
         <Character />
-
-        <div class="game"></div>
-
+        <Board />
         <Actions />
     </div>
 </template>
 
 <script setup>
-import { Interface } from '../../utils/appState';
-import Character from './Character.vue';
-import Actions from './Actions.vue';
+import { Interface } from '../../utils/appState.js';
+import Character from './GameScreen/Character.vue';
+import Actions from './GameScreen/Actions.vue';
+import Board from './GameScreen/Board.vue';
 </script>
 
 <style scoped>
@@ -28,15 +27,12 @@ import Actions from './Actions.vue';
     font-weight: bold;
 }
 
-.board {
+.game {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
     align-items: unset;
     font-size: 1.3em;
-}
-
-.game {
-    flex-grow: 1;
-    padding: 1vh 0.5vw;
-    text-align: center;
 }
 
 @media (max-width:1024px) {
@@ -44,12 +40,8 @@ import Actions from './Actions.vue';
         font-size: 1.5em;
     }
 
-    .board {
-        padding: 0;
-    }
-
     .game {
-        padding: 1vh 5vw;
+        padding: 0;
     }
 }
 </style>

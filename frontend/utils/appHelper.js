@@ -72,95 +72,95 @@ function modifyState(target, key, modifier, value) {
 // Hero stats
 export function getHeroStat(stat) {
     const key = heroStatsMap[stat];
-    return State.game.character[key];
+    return State.character[key];
 }
 
 export function setHeroStat(stat, value) {
     const key = heroStatsMap[stat];
-    State.game.character[key] = value;
+    State.character[key] = value;
 }
 
 export function updateHeroStat(stat, modifier, nb) {
     const key = heroStatsMap[stat];
-    if (!(key in State.game.character)) State.game.character[key] = 0;
-    modifyState(State.game.character, key, modifier, nb);
+    if (!(key in State.character)) State.character[key] = 0;
+    modifyState(State.character, key, modifier, nb);
 }
 
 // Game situation
 export function getSituation(data) {
     const key = gameSituationMap[data];
-    return State.game.situation[key];
+    return State.situation[key];
 }
 
 export function setSituation(data, value) {
     const key = gameSituationMap[data];
-    State.game.situation[key] = value;
+    State.situation[key] = value;
 }
 
 export function updateSituation(data, modifier, nb) {
     const key = gameSituationMap[data];
-    if (!(key in State.game.situation)) State.game.situation[key] = 0;
-    modifyState(State.game.situation, key, modifier, nb);
+    if (!(key in State.situation)) State.situation[key] = 0;
+    modifyState(State.situation, key, modifier, nb);
 }
 
 // Inventory
 export function getInventory(item) {
     const key = inventoryMap[item];
-    return State.game.character[key];
+    return State.character[key];
 }
 
 export function getInventoryLimit(item) {
     const key = inventoryLimitMap[item];
-    return State.game.character[key];
+    return State.character[key];
 }
 
 export function updateInventory(item, modifier, nb) {
     const key = inventoryMap[item];
-    if (!(key in State.game.character)) State.game.character[key] = 0;
-    modifyState(State.game.character, key, modifier, nb);
+    if (!(key in State.character)) State.character[key] = 0;
+    modifyState(State.character, key, modifier, nb);
 }
 
 // Game stats
 export function getGameStat(stat) {
     const key = gameStatsMap[stat];
-    return State.game.stats[key];
+    return State.stats[key];
 }
 
 export function setGameStat(stat, value) {
     const key = gameStatsMap[stat];
-    State.game.stats[key] = value;
+    State.stats[key] = value;
 }
 
 export function updateGameStat(stat) {
     const key = gameStatsMap[stat];
-    if (!(key in State.game.stats)) State.game.stats[key] = 0;
-    State.game.stats[key]++;
+    if (!(key in State.stats)) State.stats[key] = 0;
+    State.stats[key]++;
 }
 
 // Events
 export function getEvent(type) {
-    return State.game.events[type];
+    return State.events[type];
 }
 
 export function setEvent(type, event) {
-    if (!State.game.events) State.game.events = {};
+    if (!State.events) State.events = {};
     if (!(type in validEvents)) return;
 
     const allowed = validEvents[type];
     if (allowed.length > 0) {
-        State.game.events[type] = allowed.includes(event) ? event : null;
+        State.events[type] = allowed.includes(event) ? event : null;
     } else {
-        State.game.events[type] = event;
+        State.events[type] = event;
     }
 }
 
 // Core data
 export function getCoreData(core_data) {
-    return State.game.core[core_data];
+    return State.core[core_data];
 }
 
 export function setCoreData(core_data, value) {
-    State.game.core[core_data] = value;
+    State.core[core_data] = value;
 }
 
 // Other functions

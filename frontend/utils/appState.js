@@ -13,9 +13,5 @@ export const Interface = reactive({
     menu: 'closed'
 })
 
-export const State = reactive({
-    game: {},
-    board: {}
-})
-
+export const State = reactive({})
 export const Sounds = reactive({})

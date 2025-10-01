@@ -23,7 +23,7 @@
 </template>
 
 <script setup>
-import { Interface } from '../../utils/appState';
+import { Interface } from '../../../utils/appState.js';
 
 function playTurn() { console.log("Move") }
 function usePotion() { console.log("Potion") }

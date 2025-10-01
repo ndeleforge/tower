@@ -31,7 +31,6 @@ export async function loadSettings() {
         return;
     }
     Data.settings = await response.json();
-    console.log("Settings:", Data.settings);
 }
 
 /**
@@ -39,7 +38,7 @@ export async function loadSettings() {
  **/
 
 export async function loadContent() {
-    const lang = (State.game.core.language == "fr-FR") ? 'fr' : 'en';
+    const lang = (State.core.language == "fr-FR") ? 'fr' : 'en';
 
     const url = `/api/locale/${lang}`
     const response = await fetch(`${backendUrl}${url}`);

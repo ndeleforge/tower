@@ -2,43 +2,43 @@
     <div class="character">
         <div class="character_line">
             <div class="progress">
-                <span class="progress_data">{{ State.game.character.health }} / {{ State.game.character.health_max
+                <span class="progress_data">{{ State.character.health }} / {{ State.character.health_max
                     }}</span>
                 <span class="progress_bar health"
-                    :style="{ width: (State.game.character.health / State.game.character.health_max * 100) + '%' }">
+                    :style="{ width: (State.character.health / State.character.health_max * 100) + '%' }">
                 </span>
             </div>
             <div class="progress">
-                <span class="progress_data">{{ Data.content.vocabulary.level }} {{ State.game.character.level
+                <span class="progress_data">{{ Data.content.vocabulary.level }} {{ State.character.level
                     }}</span>
                 <span class="progress_bar xp"
-                    :style="{ width: (State.game.character.experience / State.game.character.experience_to * 100) + '%' }">
+                    :style="{ width: (State.character.experience / State.character.experience_to * 100) + '%' }">
                 </span>
             </div>
         </div>
 
         <div class="character_line">
             <div class="character_element">
-                <img :src='Data.settings.images.icon_power' /> {{ State.game.character.power }}
+                <img :src='Data.settings.images.icon_power' /> {{ State.character.power }}
             </div>
             <div class="character_element">
-                <img :src='Data.settings.images.icon_stamina' /> {{ State.game.character.stamina }}
+                <img :src='Data.settings.images.icon_stamina' /> {{ State.character.stamina }}
             </div>
             <div class="character_element">
-                <img :src='Data.settings.images.icon_potion' /> {{ State.game.character.item_potion }}
+                <img :src='Data.settings.images.icon_potion' /> {{ State.character.item_potion }}
             </div>
             <div class="character_element">
-                <img :src='Data.settings.images.icon_scroll' /> {{ State.game.character.item_scroll }}
+                <img :src='Data.settings.images.icon_scroll' /> {{ State.character.item_scroll }}
             </div>
             <div class="character_element">
-                <img :src='Data.settings.images.icon_mineral' /> {{ State.game.character.item_mineral }}
+                <img :src='Data.settings.images.icon_mineral' /> {{ State.character.item_mineral }}
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import { Data, State } from '../../utils/appState';
+import { Data, State } from '../../../utils/appState.js';
 </script>
 
 <style scoped>

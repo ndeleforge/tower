@@ -8,7 +8,7 @@
 </template>
 
 <script setup>
-import { Data, Interface } from '../../utils/appState.js'
+import { Data, Interface } from '../../../utils/appState.js';
 </script>
 
 <style scoped>

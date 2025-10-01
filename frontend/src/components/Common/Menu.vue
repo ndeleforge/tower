@@ -17,5 +17,5 @@
 </template>
 
 <script setup>
-import { Data } from '../../utils/appState.js'
+import { Data } from '../../../utils/appState.js'
 </script>
