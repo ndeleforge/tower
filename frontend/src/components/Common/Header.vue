@@ -1,9 +1,13 @@
 <template>
     <header>
         <span class="tower">{{  Data.content?.main?.title }}</span>
-        <button v-if="Interface.screen === 'game'" class="button open_menu">
-            <img :src="Data.settings.images.menu_closed" />
-        </button>
+        <img
+            v-if="Interface.screen === 'game'"
+            class="menu_icon"
+            :src="Interface.menu === 'open' ? Data.settings.images.menu_opened : Data.settings.images.menu_closed"
+            @click="Interface.menu = Interface.menu === 'open' ? 'closed' : 'open'"
+            :style="{ zIndex: Interface.menu === 'open' ? 4 : 1 }"
+        />
     </header>
 </template>
 
@@ -28,7 +32,7 @@ header {
     text-align: center;
 }
 
-.open_menu {
+.menu_icon {
     padding: 1vh;
     transition: none;
     background-color: transparent;
@@ -41,11 +45,11 @@ header {
         letter-spacing: 2px;
     }
 
-    .open_menu {
-        width: 10vw;
+    .menu_icon {
+        width: 8vw;
     }
 
-    .open_menu img {
+    img {
         width: 100%;
     }
 }

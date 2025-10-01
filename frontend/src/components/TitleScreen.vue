@@ -11,7 +11,7 @@
         </form>
 
         <p class="tip">{{ tip }}</p>
-        <p class="footer">{{ Data.content?.main?.title_footer }}</p>
+        <p class="footer">{{ Data.content?.main?.footer }}</p>
     </div>
 </template>
 

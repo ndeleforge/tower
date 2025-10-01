@@ -18,7 +18,6 @@ export function playSound(name) {
     if (Sounds[name]) {
         Sounds[name].currentTime = 0
         Sounds[name].play()
-        console.log(`Playing sound: ${name}`);
     }
 }
 
