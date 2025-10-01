@@ -1,20 +1,65 @@
-import { get, plural, rand } from './utils.js'
-import { getHeroStat, getInventory, getSpiritModifier, restoreHealth, setEvent, updateGameStat, updateHeroStat, updateInventory } from './helper.js'
-import { Data } from './gameState.js'
-import { displayImage, displayParagraph } from './interfaceManager.js'
+import { Data, Interface } from './appState.js'
 import { playSound } from './soundManager.js'
+import { getHeroStat, getInventory, getSpiritModifier, restoreHealth, setEvent, updateGameStat, updateHeroStat, updateInventory, getEvent, getSituation, setSituation, updateSituation } from './appHelper.js'
 
-/**
- * When there is no event
- **/
+// "Move" action
+export function playTurn() { 
+    setEvent("sub_action", null);
+    updateSituation("room", "add", 1);
+    Interface.section = 'information';
 
-export function noEvent() {
+    // At the 10th room
+    if (getSituation("room") > 10) {
+        setSituation("room", 1);
+        updateSituation("floor", "add", 1);
+        playSound("floor");
+    }
+
+    // All rooms expect the 10th
+    else {
+        updateGameStat("total_room");
+        playSound("room");
+    }
+
+    // Timeout to show the game again
+    setTimeout(() => {
+        Interface.section = 'board';
+    }, 1500);
+
+    // Starting the floor 5, there is one chance on two to meet the merchant at each floor
+    if (getSituation("floor") > 5 && getSituation("room") == 5) {
+        //const merchantMeeting = rand(1, 2);
+        //(merchantMeeting == 2) ? merchant() : choiceAction();
+    }
+    else {
+        choiceAction();
+    }
+}
+
+// Choose one action randomly
+function choiceAction() {
+    const events = {
+        1: { name: "no_event", func: noEvent }
+        //2: { name: "chest", func: chest },
+        //3: { name: "fight", func: fight },
+        //4: { name: "spirit", func: spirit }
+    };
+
+    const index = 1
+    const event = events[index];
+
+    setEvent("new_action", event.name);
+
+    //if (getEvent("new_action") !== getEvent("last_action")) {
+        event.func();
+    //} else {
+    //    choiceAction();
+    //y}
+}
+
+// No event
+function noEvent() {
     setEvent("last_action", "no_event");
-
-    get("#game").innerHTML = displayImage();
-    get("#container_img").style.background = "url('assets/image/" + Data.settings.images.no_event + "') no-repeat center";
-    get("#container_img").style.backgroundSize = "cover";
-    get("#game").innerHTML += displayParagraph(Data.content.events.no_event);
 }
 
 /**

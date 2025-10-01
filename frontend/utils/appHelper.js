@@ -37,7 +37,7 @@ const gameStatsMap = {
     potion_used: "potion_used",
     fight: "fight",
     chest_opened: "chest_opened",
-    chest_not_open: "chest_not_opened",
+    chest_not_opened: "chest_not_opened",
     chest_trap: "chest_trap",
     spirit_meet: "spirit_meet",
     merchant_accepted: "merchant_accepted",
@@ -143,13 +143,9 @@ export function getEvent(type) {
 }
 
 export function setEvent(type, event) {
-    if (!State.events) State.events = {};
     if (!(type in validEvents)) return;
-
-    const allowed = validEvents[type];
-    if (allowed.length > 0) {
-        State.events[type] = allowed.includes(event) ? event : null;
-    } else {
+    
+    if (State.events[type] !== event) {
         State.events[type] = event;
     }
 }

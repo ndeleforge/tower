@@ -16,7 +16,7 @@
 
 <script setup>
 import { Data, Interface } from '../../../utils/appState.js';
-import { deleteSave, resetGame } from '../../../utils/saveManager.js.cha';
+import { deleteSave, resetGame } from '../../../utils/saveManager.js';
 
 function accept() {
     if (Interface.modaleAction === 'reset') {

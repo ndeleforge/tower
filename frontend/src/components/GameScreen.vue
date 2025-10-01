@@ -1,7 +1,15 @@
 <template>
-    <div class="information" v-show="Interface.subscreen === 'information'"></div>
+    <div class="information" v-show="Interface.section === 'information'">
+        <p v-if="getSituation('room') > 10" class="important">
+            {{ Data.content.vocabulary.floor }} {{ getSituation('floor') }}
+        </p>
+        <p v-else class="important">
+            <span>{{ Data.content.vocabulary.floor }} {{ getSituation('floor') }}</span>
+            <span>{{ Data.content.vocabulary.room }} {{ getSituation('room') }}</span>
+        </p>
+    </div>
 
-    <div class="game" v-show="Interface.subscreen === 'board'">
+    <div class="game" v-show="Interface.section === 'board'">
         <Character />
         <Board />
         <Actions />
@@ -9,22 +17,32 @@
 </template>
 
 <script setup>
-import { Interface } from '../../utils/appState.js';
+import { Data, Interface } from '../../utils/appState.js';
 import Character from './GameScreen/Character.vue';
 import Actions from './GameScreen/Actions.vue';
 import Board from './GameScreen/Board.vue';
+import { getSituation } from '../../utils/appHelper.js';
 </script>
 
 <style scoped>
 .information {
-    padding: 2vh;
-    font-size: 2em;
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
     user-select: none !important;
 }
 
 .information .important {
     font-size: 2em;
     font-weight: bold;
+}
+
+.information span {
+    padding: 2vh;
+    font-size: 2em;
+    text-align: center;
+    display: block;
 }
 
 .game {

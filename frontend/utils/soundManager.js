@@ -1,5 +1,4 @@
-import { get } from './utils.js'
-import { getCoreData, setCoreData } from './appHelper.js'
+import { getCoreData } from './appHelper.js'
 import { Data, Sounds } from './appState.js'
 
 // Add sound objects to the Sounds state
@@ -15,35 +14,8 @@ export async function initSound() {
 
 // Play a sound by its name
 export function playSound(name) {
-    if (Sounds[name]) {
+    if (Sounds[name] && getCoreData('sound')) {
         Sounds[name].currentTime = 0
         Sounds[name].play()
-    }
-}
-
-////////////////////////////////////////////////////
-
-/**
- * Turn on and turn off sound
- **/
-
-export function toggleSound() {
-    if (getCoreData("sound") == true) {
-        setCoreData("sound", false);
-        get("#volume_button").style.opacity = 0.5;
-    }
-    else {
-        setCoreData("sound", true);
-        get("#volume_button").style.opacity = 1;
-    }
-}
-
-/**
-* Display ON/OFF at the start / load of the game
-**/
-
-export function displaySoundButton() {
-    if (!getCoreData("sound")) {
-        get("#volume_button").style.opacity = 0.5;
     }
 }

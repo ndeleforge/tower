@@ -14,30 +14,8 @@ import { noEvent, spirit } from './eventsManager.js'
  **/
 
 export function startGame(mode) {
-    setRefresh();
 
-    get('#title_screen').style.display = "none";
-    get('#board').style.display = "flex";
-
-    changeDisplay("normal");
-    createInterface();
-    addSoundToHTML();
-
-    if (mode == "new") {
-        updateCoreData("name", get("#title_character").value);
-        setEvent("last_action", null);
-        setEvent("new_action", null);
-        updateCoreData("ongoing", true);
-        playSound("room");
-
-        const imgTower = displayImage(Data.settings.images.start);
-        const paragraph_1 = displayParagraph(Data.content.events.start_game_1);
-        const paragraph_2 = displayParagraph(Data.content.events.start_game_2);
-        const paragraph_3 = displayParagraph(Data.content.events.start_game_3);
-        get("#game").innerHTML = imgTower + paragraph_1 + paragraph_2 + paragraph_3;
-    }
-
-    else if (mode == "load") {
+    if (mode == "load") {
         // Restore fight screen
         if (getEvent("last_action") == "fight" && getEvent("sub_action") != "fight_over") {
             changeDisplay("fight");

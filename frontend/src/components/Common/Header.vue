@@ -1,6 +1,11 @@
 <template>
-    <header>
-        <span class="tower">{{  Data.content?.main?.title }}</span>
+    <header v-if="Interface.section !== 'information'">
+        <span v-if="Interface.screen === 'title'" class="tower">{{  Data.content?.main?.title }}</span>
+        <span v-if="Interface.screen === 'game'" class="tower">
+            {{  Data.content?.vocabulary?.floor }} {{ State.situation.floor }} -
+            {{  Data.content?.vocabulary?.room }} {{ State.situation.room }}
+        </span>
+
         <img
             v-if="Interface.screen === 'game'"
             class="menu_icon"
@@ -12,7 +17,7 @@
 </template>
 
 <script setup>
-import { Data, Interface } from '../../../utils/appState.js';
+import { State, Data, Interface } from '../../../utils/appState.js';
 </script>
 
 <style scoped>

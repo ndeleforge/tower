@@ -7,8 +7,8 @@ export const Data = reactive({
 })
 
 export const Interface = reactive({
-    screen: 'title',
-    subscreen: 'board',
+    screen: null,
+    section: 'board',
     actions: 'normal',
     menu: false,
     modale: false,

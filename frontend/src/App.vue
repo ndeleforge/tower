@@ -1,7 +1,7 @@
 <template>
     <Header />
     <TitleScreen v-if="Interface.screen === 'title'" />
-    <GameScreen v-else-if="Interface.screen === 'game'" />
+    <GameScreen v-if="Interface.screen === 'game'" />
     <Menu />
     <Modale />
 </template>
@@ -19,6 +19,7 @@ import { Interface } from '../utils/appState.js';
 import { loadContent, loadSettings, loadVersion } from '../utils/backendManager.js';
 import { loadSave } from '../utils/saveManager.js';
 import { initSound } from '../utils/soundManager.js';
+import { getCoreData } from '../utils/appHelper.js';
 
 
 onMounted(async () => {
@@ -28,6 +29,8 @@ onMounted(async () => {
         await loadSave();
         await loadContent();
         await initSound();
+        
+        Interface.screen = (getCoreData('ongoing')) ? 'game' : 'title';
     }
     catch (error) {
         console.error("Error loading app:", error);
