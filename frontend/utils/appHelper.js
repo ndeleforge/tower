@@ -63,19 +63,13 @@ const levelUpModifiers = {
     stamina: "level_up_stamina"
 };
 
-/** ----------------------------
- * Helper
- * -----------------------------
- */
+// Generic function to modify a state property
 function modifyState(target, key, modifier, value) {
     if (!target.hasOwnProperty(key)) return;
     target[key] += modifier === "add" ? value : -value;
 }
 
-/** ----------------------------
- * Hero stats
- * -----------------------------
- */
+// Hero stats
 export function getHeroStat(stat) {
     const key = heroStatsMap[stat];
     return State.game.character[key];
@@ -92,10 +86,7 @@ export function updateHeroStat(stat, modifier, nb) {
     modifyState(State.game.character, key, modifier, nb);
 }
 
-/** ----------------------------
- * Game situation
- * -----------------------------
- */
+// Game situation
 export function getSituation(data) {
     const key = gameSituationMap[data];
     return State.game.situation[key];
@@ -112,10 +103,7 @@ export function updateSituation(data, modifier, nb) {
     modifyState(State.game.situation, key, modifier, nb);
 }
 
-/** ----------------------------
- * Inventory
- * -----------------------------
- */
+// Inventory
 export function getInventory(item) {
     const key = inventoryMap[item];
     return State.game.character[key];
@@ -132,10 +120,7 @@ export function updateInventory(item, modifier, nb) {
     modifyState(State.game.character, key, modifier, nb);
 }
 
-/** ----------------------------
- * Game stats
- * -----------------------------
- */
+// Game stats
 export function getGameStat(stat) {
     const key = gameStatsMap[stat];
     return State.game.stats[key];
@@ -152,10 +137,7 @@ export function updateGameStat(stat) {
     State.game.stats[key]++;
 }
 
-/** ----------------------------
- * Events
- * -----------------------------
- */
+// Events
 export function getEvent(type) {
     return State.game.events[type];
 }
@@ -172,11 +154,7 @@ export function setEvent(type, event) {
     }
 }
 
-/** ----------------------------
- * Core data
- * -----------------------------
- */
-
+// Core data
 export function getCoreData(core_data) {
     return State.game.core[core_data];
 }
@@ -185,11 +163,7 @@ export function setCoreData(core_data, value) {
     State.game.core[core_data] = value;
 }
 
-/** ----------------------------
- * Health & Experience
- * -----------------------------
- */
-
+// Other functions
 export function restoreHealth() {
     setHeroStat("health", getHeroStat("health_max"));
 }
@@ -199,11 +173,7 @@ export function resetExperience() {
     setHeroStat("experience_to", parseInt(getHeroStat("experience_to") * 1.2));
 }
 
-/** ----------------------------
- * Modifiers
- * -----------------------------
- */
-
+// Modifiers
 export function getSpiritModifier(stat) {
     const key = spiritModifiers[stat];
     return Data.settings.modifier[key];

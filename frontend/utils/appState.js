@@ -17,3 +17,5 @@ export const State = reactive({
     game: {},
     board: {}
 })
+
+export const Sounds = reactive({})

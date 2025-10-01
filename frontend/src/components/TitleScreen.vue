@@ -19,27 +19,36 @@
 import { watch, ref } from 'vue'
 import { Data, State } from '../../utils/appState.js'
 import { Interface } from '../../utils/appState.js'
-import { setCoreData } from '../../utils/appHelper.js'
+import { setCoreData, setEvent } from '../../utils/appHelper.js'
+import { playSound } from '../../utils/soundManager.js'
 
 const characterName = ref('')
 const tip = ref('')
 
 // Add something to put the input in red if the pattern is not respected
 
+// Name must be between 2 and 25 characters, can include letters, spaces, hyphens, and apostrophes
 function isValidName(name) {
     const regex = /^[A-Za-z' -]{2,25}(?:[ -][A-Za-z' -]{2,25})?$/
     return regex.test(name)
 }
 
+// Start the game if the name is valid
 function startGame() {
     if (!isValidName(characterName.value)) {
         return
     }
 
     setCoreData("name", characterName.value.trim())
+    setCoreData("ongoing", true)
+    setEvent("last_action", null)
+    setEvent("new_action", null)
     Interface.screen = 'game'
+    playSound('room')
+    
 }
 
+// Fill the input with the name from the save if it exists
 watch(
     () => State.game?.core?.name,
     (name) => {
@@ -50,6 +59,7 @@ watch(
     { immediate: true }
 )
 
+// Pick a random tip when the content is loaded
 watch(
     () => Data.content,
     (content) => {
@@ -60,7 +70,6 @@ watch(
     },
     { immediate: true }
 )
-
 </script>
 
 <style scoped>

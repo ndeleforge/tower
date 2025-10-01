@@ -18,6 +18,7 @@ import Popup from './components/Popup.vue';
 import { Interface } from '../utils/appState.js';
 import { loadContent, loadSettings, loadVersion } from '../utils/backendManager.js';
 import { loadSave } from '../utils/saveManager';
+import { initSound } from '../utils/soundManager.js';
 
 onMounted(async () => {
     try {
@@ -25,6 +26,7 @@ onMounted(async () => {
         await loadSettings();
         await loadSave();
         await loadContent();
+        await initSound();
     }
     catch (error) {
         console.error("Error loading app:", error);

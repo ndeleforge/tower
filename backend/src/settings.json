@@ -57,13 +57,13 @@
         "spirit_stamina": 1
     },
     "sounds": {
-        "sound_attack": "attack",
-        "sound_scroll": "scroll",
-        "sound_merchant": "merchant",
-        "sound_chest": "chest",
-        "sound_potion": "potion",
-        "sound_room": "room",
-        "sound_floor": "floor"
+        "attack": "attack",
+        "scroll": "scroll",
+        "merchant": "merchant",
+        "chest": "chest",
+        "potion": "potion",
+        "room": "room",
+        "floor": "floor"
     },
     "images": {
         "menu_closed": "image/icon/book_closed.png",

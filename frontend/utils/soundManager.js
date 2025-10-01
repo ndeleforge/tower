@@ -1,17 +1,29 @@
 import { get } from './utils.js'
-import { getCoreData, updateCoreData } from './helper.js'
-import { Data } from './gameState.js'
+import { getCoreData, setCoreData } from './appHelper.js'
+import { Data, Sounds } from './appState.js'
 
-/**
- * Play sound if it's enabled
- * @param {string} value sound ID
- **/
+// Add sound objects to the Sounds state
+export async function initSound() {
+    Object.entries(Data.settings?.sounds || {}).forEach(([sound, filename]) => {
+        if (!Sounds[sound]) {
+            const audio = new Audio(`sound/${filename}.mp3`)
+            audio.preload = 'auto'
+            Sounds[sound] = audio
+        }
+    })
+    console.log("Sounds initialized:", Object.keys(Sounds));
+}
 
-export function playSound(value) {
-    if (getCoreData("sound") == true) {
-        get("#sound_" + value).play();
+// Play a sound by its name
+export function playSound(name) {
+    if (Sounds[name]) {
+        Sounds[name].currentTime = 0
+        Sounds[name].play()
+        console.log(`Playing sound: ${name}`);
     }
 }
+
+////////////////////////////////////////////////////
 
 /**
  * Turn on and turn off sound
@@ -19,11 +31,11 @@ export function playSound(value) {
 
 export function toggleSound() {
     if (getCoreData("sound") == true) {
-        updateCoreData("sound", false);
+        setCoreData("sound", false);
         get("#volume_button").style.opacity = 0.5;
     }
     else {
-        updateCoreData("sound", true);
+        setCoreData("sound", true);
         get("#volume_button").style.opacity = 1;
     }
 }
@@ -36,22 +48,4 @@ export function displaySoundButton() {
     if (!getCoreData("sound")) {
         get("#volume_button").style.opacity = 0.5;
     }
-}
-
-/**
- * Add all the sources sounds into the HTML
- **/
-
-export function addSoundToHTML() {
-    Object.entries(Data.settings.sounds).forEach(([sound, filename]) => {
-        if (!get(`#${sound}`)) {
-            const audio = document.createElement("audio");
-            audio.id = sound;
-            audio.preload = "auto";
-            audio.src = `assets/sound/${filename}.mp3`;
-            audio.type = "audio/mpeg";
-
-            get("~body").appendChild(audio);
-        }
-    });
 }
