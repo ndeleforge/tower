@@ -4,10 +4,7 @@ import { watch } from "vue";
 
 export const SAVE = "TowerData";
 
-/**
- * Automatic save on each change of the State object
- **/
-
+// Automatically save any changes on the State object
 watch(
     State,
     (newState) => {
@@ -16,10 +13,7 @@ watch(
     { deep: true, immediate: false }
 )
 
-/**
- * Parse existing game data or create new data
- **/
-
+// Parse existing data or create a new save
 export async function loadSave() {
     const saved = getStorage(SAVE)
 
@@ -39,12 +33,9 @@ export async function loadSave() {
     }
 }
 
-/**
- * Reset the game but keeps some data such as scores etc.
- **/
-
-export async function resetGame() {
-    updateCoreData("ongoing", false);
+// Refresh the save by deleting some data but not all (for new start)
+function refreshSave() {
+    setCoreData("ongoing", false);
     updateGameStat("total_game");
     setSituation("floor", 1);
     setSituation("room", 1);
@@ -57,54 +48,25 @@ export async function resetGame() {
 
     const charDefaults = Data.settings.character;
     keysToReset.forEach(key => {
-        State.game.character[key] = charDefaults[key];
+        State.character[key] = charDefaults[key];
     });
 
     setStorage(SAVE, JSON.stringify(State.game));
 }
-/**
- * Restart manually the game
- **/
 
-export function restartGame() {
-    get("#blank_popup").style.display = "block";
-    get("#popup").style.display = "flex";
-    get("#popup_text").innerHTML = Data.content.main.popup_restart;
-
-    get("#popup_cancel").addEventListener("click", () => {
-        get("#blank_popup").style.display = "none";
-        get("#popup").style.display = "none";
-    });
-
-    get("#popup_accept").addEventListener("click", () => {
-        clearInterval(State.refresh_display);
-        updateCoreData("ongoing", false);
-        resetGame();
-        location.reload();
-    });
+// Reset the game by manual action
+export function resetGame() {
+    refreshSave();
+    location.reload();
 }
 
-/**
- * Delete all game data manually
- **/
-
-export function deleteGame() {
-    get("#blank_popup").style.display = "block";
-    get("#popup").style.display = "flex";
-    get("#popup_text").innerHTML = Data.content.main.popup_delete;
-
-    get("#popup_cancel").addEventListener("click", () => {
-        get("#blank_popup").style.display = "none";
-        get("#popup").style.display = "none";
-    });
-
-    get("#popup_accept").addEventListener("click", () => {
-        clearInterval(State.refresh_display);
-        deleteStorage(SAVE);
-        location.reload();
-    });
+// Delete save and reload the app
+export function deleteSave() {
+    deleteStorage(SAVE);
+    location.reload();
 }
 
+// Utility functions
 export function getStorage(key) {
     return key != null ? localStorage.getItem(key) : null
 }

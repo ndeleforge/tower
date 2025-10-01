@@ -19,11 +19,11 @@
         "refuse_offer": "Refuse offer",
         "settings_title": "Game settings",
         "stats_title": "Statistiques",
-        "popup_title": "Important information",
-        "popup_accept": "Confirm",
-        "popup_cancel": "Cancel",
-        "popup_restart": "Do you want to restart the current game? Your current progress will be lost but your stats will be saved.",
-        "popup_delete": "Do you want to erase all game data? The application will be reset and you'll lose your data and your stats.",
+        "modale_title": "Important information",
+        "modale_accept": "Confirm",
+        "modale_cancel": "Cancel",
+        "modale_reset": "Do you want to restart the current game? Your current progress will be lost but your stats will be saved.",
+        "modale_delete": "Do you want to erase all game data? The application will be reset and you'll lose your data and your stats.",
         "updated": "The application has been updated and needs to be reset. You're gonna lose your progression and your stats."
     },
     "stats": {

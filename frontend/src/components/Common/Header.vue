@@ -4,9 +4,9 @@
         <img
             v-if="Interface.screen === 'game'"
             class="menu_icon"
-            :src="Interface.menu === 'open' ? Data.settings.images.menu_opened : Data.settings.images.menu_closed"
-            @click="Interface.menu = Interface.menu === 'open' ? 'closed' : 'open'"
-            :style="{ zIndex: Interface.menu === 'open' ? 4 : 1 }"
+            :src="Interface.menu ? Data.settings.images.menu_opened : Data.settings.images.menu_closed"
+            @click="Interface.menu = !Interface.menu"
+            :style="{ zIndex: Interface.menu ? 4 : 1 }"
         />
     </header>
 </template>

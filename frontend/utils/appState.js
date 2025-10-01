@@ -10,7 +10,9 @@ export const Interface = reactive({
     screen: 'title',
     subscreen: 'board',
     actions: 'normal',
-    menu: 'closed'
+    menu: false,
+    modale: false,
+    modaleAction: null
 })
 
 export const State = reactive({})

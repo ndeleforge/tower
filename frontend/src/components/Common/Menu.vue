@@ -1,15 +1,19 @@
 <template>
-    <div v-if="Interface.menu === 'open'" class="menu">
+    <div v-if="Interface.menu" class="menu">
         <h1>{{ Data.content.main.settings_title }}</h1>
         <div class="buttons">
             <button
                 @click="State.core.sound = !State.core.sound"
                 :class="{ 'inactive': !State.core.sound }"
             >
-                    {{ Data.content.main.toggle_sound }}
+                {{ Data.content.main.toggle_sound }}
             </button>
-            <button class="off">{{ Data.content.main.reset_game }}</button>
-            <button class="off">{{ Data.content.main.delete_save }}</button>
+            <button @click="openModale('reset')">
+                {{ Data.content.main.reset_game }}
+            </button>
+            <button @click="openModale('delete')">
+                {{ Data.content.main.delete_save }}
+            </button>
         </div>
 
         <h1>{{  Data.content.main.stats_title }}</h1>
@@ -25,6 +29,12 @@
 
 <script setup>
 import { State, Data, Interface } from '../../../utils/appState.js'
+
+function openModale(value) {
+    Interface.modaleAction = value
+    Interface.modale = true
+}
+
 </script>
 
 <style scoped>
@@ -77,11 +87,6 @@ button {
 
 button.inactive {
     opacity: 0.5;
-}
-
-button.off {
-    opacity: 0.3;
-    pointer-events: none;
 }
 
 button:hover {

@@ -3,7 +3,7 @@
     <TitleScreen v-if="Interface.screen === 'title'" />
     <GameScreen v-else-if="Interface.screen === 'game'" />
     <Menu />
-    <Popup />
+    <Modale />
 </template>
 
 <script setup>
@@ -13,12 +13,13 @@ import Header from './components/Common/Header.vue';
 import TitleScreen from './components/TitleScreen.vue';
 import GameScreen from './components/GameScreen.vue';
 import Menu from './components/Common/Menu.vue';
-import Popup from './components/Common/Popup.vue';
+import Modale from './components/Common/Modale.vue';
 
 import { Interface } from '../utils/appState.js';
 import { loadContent, loadSettings, loadVersion } from '../utils/backendManager.js';
 import { loadSave } from '../utils/saveManager.js';
 import { initSound } from '../utils/soundManager.js';
+
 
 onMounted(async () => {
     try {
