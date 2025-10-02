@@ -10,7 +10,7 @@
                 <button class="button_action" @click="refuseMerchant">{{ Data.content.main.refuse_offer }}</button>
             </div>
 
-            <div class="actions_line" v-else-if="State.events.current_event === 'fight'">
+            <div class="actions_line" v-else-if="fightEventOnGoing">
                 <button class="button_action" @click="attack">{{ Data.content.main.attack }}</button>
                 <button 
                     class="button_action"
@@ -41,6 +41,7 @@ import { State, Data } from '../../../utils/appState.js';
 import { playTurn, usePotion } from '../../../utils/eventsManager.js';
 import { doNotOpenChest, openChest } from '../../../utils/chestManager.js';
 import { acceptMerchant, refuseMerchant } from '../../../utils/merchantManager.js';
+import { attack, useScroll } from '../../../utils/fightManager.js';
 
 const chestEventOnGoing = computed(() => 
     State.events.current_event === 'chest' &&
@@ -50,6 +51,11 @@ const chestEventOnGoing = computed(() =>
 const merchantEventOnGoing = computed(() => 
     State.events.current_event === 'merchant' &&
     !['merchant_accepted', 'merchant_refused', 'merchant_not_enough'].includes(State.events.current_subevent)
+);
+
+const fightEventOnGoing = computed(() => 
+    State.events.current_event === 'fight' &&
+    !['fight_attack', 'fight_scroll'].includes(State.events.current_subevent)
 );
 
 const canUsePotion = computed(() => {

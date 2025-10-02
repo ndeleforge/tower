@@ -1,13 +1,13 @@
 <template>
-    <Header />
-    <TitleScreen v-if="Interface.screen === 'title'" />
-    <GameScreen v-if="Interface.screen === 'game'" />
+    <Header v-if='appLoaded' />
+    <TitleScreen v-if='titleScreen' />
+    <GameScreen v-if='gameScreen && appLoaded' />
     <Menu />
     <Modale />
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 
 import Header from './components/Common/Header.vue';
 import TitleScreen from './components/TitleScreen.vue';
@@ -21,6 +21,9 @@ import { loadSave } from '../utils/saveManager.js';
 import { initSound } from '../utils/soundManager.js';
 import { getCoreData } from '../utils/appHelper.js';
 
+const appLoaded = ref(false);
+const titleScreen = computed(() => Interface.screen === 'title');
+const gameScreen = computed(() => Interface.screen === 'game');
 
 onMounted(async () => {
     try {
@@ -29,12 +32,11 @@ onMounted(async () => {
         await loadSave();
         await loadContent();
         await initSound();
-        
+        appLoaded.value = true;
         Interface.screen = (getCoreData('ongoing')) ? 'game' : 'title';
     }
     catch (error) {
         console.error("Error loading app:", error);
     }
 })
-
 </script>

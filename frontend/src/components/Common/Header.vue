@@ -1,13 +1,13 @@
 <template>
-    <header v-if="Interface.section !== 'information'">
-        <span v-if="Interface.screen === 'title'" class="tower">{{  Data.content?.main?.title }}</span>
-        <span v-if="Interface.screen === 'game'" class="tower">
+    <header v-if="!informationSection && !gameOver">
+        <span v-if="titleScreen" class="tower">{{  Data.content?.main?.title }}</span>
+        <span v-if="gameScreen" class="tower">
             {{  Data.content?.vocabulary?.floor }} {{ State.situation.floor }} -
             {{  Data.content?.vocabulary?.room }} {{ State.situation.room }}
         </span>
 
         <img
-            v-if="Interface.screen === 'game'"
+            v-if="gameScreen"
             class="menu_icon"
             :src="Interface.menu ? Data.settings.images.menu_opened : Data.settings.images.menu_closed"
             @click="Interface.menu = !Interface.menu"
@@ -17,7 +17,14 @@
 </template>
 
 <script setup>
+import { computed } from 'vue';
+import { getEvent } from '../../../utils/appHelper.js';
 import { State, Data, Interface } from '../../../utils/appState.js';
+
+const titleScreen = computed(() => Interface.screen === 'title');
+const gameScreen = computed(() => Interface.screen === 'game');
+const informationSection = computed(() => Interface.section === 'information');
+const gameOver = computed(() => getEvent("game_over") === true)
 </script>
 
 <style scoped>

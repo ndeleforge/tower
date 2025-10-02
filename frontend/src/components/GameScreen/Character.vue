@@ -38,7 +38,38 @@
 </template>
 
 <script setup>
+import { watch } from 'vue';
+import { getHeroStat, getLevelUpModifier, resetExperience, restoreHealth, setEvent, updateHeroStat } from '../../../utils/appHelper.js';
 import { Data, State } from '../../../utils/appState.js';
+
+// Check Game over conditon
+watch(
+    () => getHeroStat("health"),
+    (health) => {
+        if (health < 1 ) {
+            setEvent("game_over", true);
+        }
+    }
+)
+
+// Check Level up condition
+watch(
+    () => getHeroStat("experience"),
+    (experience) => {
+        const experienceTo = getHeroStat("experience_to");
+
+        if (experience >= experienceTo) {
+            setEvent("level_up", true);
+            updateHeroStat("level", "add", 1);
+            updateHeroStat("power", "add", getLevelUpModifier("power"));
+            updateHeroStat("stamina", "add", getLevelUpModifier("stamina"));
+            updateHeroStat("health_max", "add", getLevelUpModifier("health"));
+
+            restoreHealth();
+            resetExperience();
+        }
+    }
+);
 </script>
 
 <style scoped>

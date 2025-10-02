@@ -95,7 +95,7 @@
         "fight_win_4": " d'expérience",
         "fight_win_5": "Vous avez gagné ",
         "fight_magic": "Vous avez vaincu le monstre grâce à un sort magique",
-        "gameover_1": "Vous avez été vaincu.<br />Vous êtes arrivé à l'étage ",
+        "gameover_1": "Vous avez été vaincu. Vous êtes arrivé à l'étage ",
         "gameover_2": "Score : ",
         "gameover_button": "Recommencer"
     },

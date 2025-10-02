@@ -1,5 +1,4 @@
 import { updateHeroStat, getInventory, setEvent, updateInventory, updateGameStat, randomBetween } from './appHelper.js'
-import { Data } from './appState.js'
 import { playSound } from './soundManager.js'
 
 // Meeting with the merchant : exchange of minerals

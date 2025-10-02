@@ -168,7 +168,7 @@ export function getSpiritModifier(stat) {
 
 export function getLevelUpModifier(stat) {
     const key = levelUpModifiers[stat];
-    return Data.settings.modifie[key];
+    return Data.settings.modifier[key];
 }
 
 // Others

@@ -84,6 +84,27 @@ input {
     font-family: inherit;
 }
 
+button {
+    padding: 2vh;
+    border: 0;
+    color: var(--button-color-1);
+    background-color: var(--button-color-3);
+    transition: all 0.5s ease-out;
+    cursor: pointer;
+}
+
+button:hover {
+    color: var(--button-color-2);
+}
+
+.disabled,
+.disabled:hover {
+    color: var(--button-color-1) !important;
+    opacity: 0.5 !important;
+    background-color: var(--button-color-3) !important;
+    cursor: not-allowed !important;
+}
+
 a {
     text-decoration: none;
     color: var(--text-link);
@@ -113,62 +134,3 @@ a:hover {
         border-radius: 0;
     }
 }
-
-/* ======================================== */
-/* ======== BUTTON */
-
-button {
-    padding: 2vh;
-    border: 0;
-    color: var(--button-color-1);
-    background-color: var(--button-color-3);
-    transition: all 0.5s ease-out;
-    cursor: pointer;
-}
-
-button:hover {
-    color: var(--button-color-2);
-}
-
-.disabled,
-.disabled:hover {
-    color: var(--button-color-1) !important;
-    opacity: 0.5 !important;
-    background-color: var(--button-color-3) !important;
-    cursor: not-allowed !important;
-}
-
-@media (max-width:1024px) {
-    .menu_button {
-        min-width: 18vw;
-    }
-
-    .menu_button:hover {
-        color: var(--button-color-1);
-        background-color: var(--button-color-2);
-    }
-}
-
-/* ======================================== */
-/* ======== GAME SCREEN  */
-
-.bad_information {
-    color: var(--text-red);
-}
-
-.good_information {
-    color: var(--text-green);
-}
-
-#container_img {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 25vh;
-}
-
-#container_img img {
-    max-height: 25vh;
-    min-height: 15vh;
-}
-

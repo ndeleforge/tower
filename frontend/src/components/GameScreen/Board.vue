@@ -12,7 +12,7 @@
             <p>{{  Data.content.events.no_event }}</p>
         </div>
 
-        <div v-show="spiritMeeting">
+        <div v-show="spirit">
             <div v-if="waterSpirit">
                 <img :src='Data.settings.images.water_spirit' />
                 <p>{{  Data.content.events.spirit_water_1 }}.</p>
@@ -72,20 +72,62 @@
             </div>
         </div>
 
+        <div v-show="fight">
+            <img :src="getEvent('monster_data')[3]" :alt="getEvent('monster_data')[2]" />
+
+            <div v-show="!fightAttack && !fightScroll">
+                <p><strong>{{ getEvent('monster_data')[2] }}</strong> {{ Data.content.events.fight_start }} !</p>
+                <p>
+                    {{ Data.content.vocabulary.health }} : {{ getEvent('monster_data')[0] }} | 
+                    {{ Data.content.vocabulary.power }} : {{ getEvent('monster_data')[1] }}
+                </p>
+            </div>
+
+            <div v-show='fightAttack'>
+                <p>
+                    <strong>{{ getEvent('monster_data')[2] }}</strong> {{ Data.content.events.fight_win_1 }}
+                    {{ getEvent("fight_nb_hit") }} {{ Data.content.vocabulary.hit_singular }} !
+                </p>
+                <p>
+                    {{ Data.content.events.fight_win_2 }} <strong>{{ getEvent("fight_damage") }}</strong> 
+                    {{ Data.content.vocabulary.point_singular }} {{ Data.content.events.fight_win_3 }}.
+                </p>
+                <p v-show='getHeroStat("health") > 0'>
+                    {{ Data.content.events.fight_win_5 }} <strong>{{ getEvent('fight_xp_gain') }}</strong> 
+                    {{ Data.content.vocabulary.point_singular }} {{ Data.content.events.fight_win_4 }}.
+                </p>
+            </div>
+
+            <div v-show='fightScroll'>
+                <p>{{ Data.content.events.fight_magic }}.</p>
+                <p>
+                    {{ Data.content.events.fight_win_5 }} <strong>{{ getEvent('fight_xp_gain') }}</strong> 
+                    {{ Data.content.vocabulary.point_singular }} {{ Data.content.events.fight_win_4 }}.
+                </p>
+            </div>
+        </div>
+
         <div v-show="potionUsed">
+            <hr>
             <p>{{ Data.content.events.healing }}</p>
+        </div>
+
+        <div v-show="levelUp">
+            <hr>
+            <p>{{ Data.content.events.level_up_1 }}.</p>
+            <p>{{ Data.content.events.level_up_2 }}.</p>
         </div>
     </div>
 </template>
 
 <script setup>
 import { computed } from 'vue';
-import { getEvent, getSituation, getSpiritModifier } from '../../../utils/appHelper.js';
+import { getEvent, getHeroStat, getSituation, getSpiritModifier } from '../../../utils/appHelper.js';
 import { Data } from '../../../utils/appState.js';
 
 const isIntro = computed(() => getSituation("floor") === 1 && getSituation("room") === 1);
 const noEvent = computed(() => getEvent("current_event") === 'no_event');
-const spiritMeeting = computed(() => getEvent("current_event") === "spirit_meeting");
+const spirit = computed(() => getEvent("current_event") === "spirit");
 const waterSpirit = computed(() => getEvent("current_subevent") === 'water_spirit');
 const fireSpirit = computed(() => getEvent("current_subevent") === 'fire_spirit');
 const earthSpirit = computed(() => getEvent("current_subevent") === 'earth_spirit');
@@ -94,7 +136,11 @@ const chest = computed(() => getEvent("current_event") === 'chest');
 const chestOpened = computed(() => getEvent("current_subevent") === 'chest_opened');
 const chestNotOpened = computed(() => getEvent("current_subevent") === 'chest_not_opened');
 const merchant = computed(() => getEvent("current_event") === 'merchant');
+const fight = computed(() => getEvent("current_event") === 'fight');
+const fightAttack = computed(() => getEvent("current_subevent") === 'fight_attack');
+const fightScroll = computed(() => getEvent("current_subevent") === 'fight_scroll');
 const potionUsed = computed(() => getEvent("potion_used") === true);
+const levelUp = computed(() => getEvent("level_up") === true);
 </script>
 
 <style scoped>

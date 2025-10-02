@@ -95,7 +95,7 @@
         "fight_win_4": " of experience",
         "fight_win_5": "You have won ",
         "fight_magic": "You have defeated the monster with a magic spell",
-        "gameover_1": "You have lost.<br />You have been at the floor  ",
+        "gameover_1": "You have lost. You have been at the floor  ",
         "gameover_2": "Score : ",
         "gameover_button": "Restart"
     },

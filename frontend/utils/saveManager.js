@@ -1,5 +1,5 @@
 import { watch, computed } from "vue";
-import { setSituation, setCoreData, updateGameStat } from "./appHelper.js"
+import { setSituation, setCoreData, updateGameStat, setEvent } from "./appHelper.js"
 import { Data, State } from "./appState.js";
 
 export const SAVE = "TowerData";
@@ -48,7 +48,7 @@ export async function loadSave() {
             situation: { ...Data.settings.situation },
             character: { ...Data.settings.character }
         })
-
+        
         setCoreData("language", navigator.language || 'en-US');
     }
     else {
@@ -59,6 +59,8 @@ export async function loadSave() {
 // Refresh the save by deleting some data but not all (for new start)
 function refreshSave() {
     setCoreData("ongoing", false);
+    setEvent("game_over", false);
+    setEvent("current_event", null);
     updateGameStat("total_game");
     setSituation("floor", 1);
     setSituation("room", 1);

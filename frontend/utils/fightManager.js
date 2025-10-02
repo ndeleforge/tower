@@ -1,35 +1,23 @@
-import { get, plural, rand } from './utils.js'
-import { getHeroStat, getInventory, getSituation, setEvent, updateGameStat, updateHeroStat, updateInventory } from './helper.js'
-import { Data, State } from './gameState.js'
-import { changeDisplay, displayImage, displayParagraph } from './interfaceManager.js'
+import { getHeroStat, getInventory, getSituation, setEvent, updateGameStat, updateHeroStat, updateInventory, randomBetween, getEvent } from './appHelper.js'
+import { Data } from './appState.js'
 import { playSound } from './soundManager.js'
 
-/**
- * Initialize the fight event : allow attack, magic or escaping
- **/
-
-export function fight() {
-    setEvent("last_action", "fight");
-    State.game.events.monster = chooseMonster();
-    changeDisplay("fight");
-
-    const paragraph_1 = displayImage(State.game.events.monster[3], State.game.events.monster[2]);
-    const paragraph_2 = displayParagraph(`<strong>${State.game.events.monster[2]}</strong> ${Data.content.events.fight_start} !`);
-    const paragraph_3 = displayParagraph([
-        `${Data.content.vocabulary.health} : <strong>${State.game.events.monster[0]}</strong> /`,
-        `${Data.content.vocabulary.power} : <strong>${State.game.events.monster[1]}</strong>`
-    ]);
-
-    get("#game").innerHTML = paragraph_1 + paragraph_2 + paragraph_3;
+// Initialize the fight
+export function startFight() {
+    setEvent("current_event", "fight");
+    setEvent("monster_data", chooseMonster());
 }
 
-/**
- * Choose the monster according the height in the tower
- **/
-
+// Choose the monster according the height in the tower
 function chooseMonster() {
-    const monster_health = rand(getSituation("floor") * 3, getSituation("floor") * 5);
-    let monster_strenght = parseInt(rand(monster_health / 4, monster_health / 3));
+    const monster_health = randomBetween(
+        getSituation("floor") * 3,
+        getSituation("floor") * 5
+    );
+    let monster_strenght = parseInt(randomBetween(
+        monster_health / 4,
+        monster_health / 3)
+    );
     if (monster_strenght <= 0) monster_strenght = 1;
 
     const monsters = [
@@ -59,70 +47,39 @@ function chooseMonster() {
     }
 }
 
-/**
- * Fight monster by physical attack : 100% of experience, taking damage
- **/
-
+// Fight monster by physical attack : 100% of experience, taking damage
 export function attack() {
-    setEvent("sub_action", "fight_over");
+    setEvent("current_subevent", "fight_attack");
     updateGameStat("fight");
-    
     playSound("attack");
-    changeDisplay("normal");
 
     // Damage taken
-    const nb_hit = Math.ceil(State.game.events.monster[0] / getHeroStat("power"));
-    const damage = (nb_hit <= 1) ? 0 : parseInt(Math.max(0, (State.game.events.monster[1] - getHeroStat("stamina"))) * (nb_hit - 1));
+    const nb_hit = Math.ceil(getEvent("monster_data")[0] / getHeroStat("power"));
+    const damage = (nb_hit <= 1) ? 0 : parseInt(Math.max(0, (getEvent("monster_data")[1] - getHeroStat("stamina"))) * (nb_hit - 1));
     updateHeroStat("health", "minus", damage);
+    setEvent("fight_nb_hit", nb_hit);
+    setEvent("fight_damage", damage);
 
     // Experience
-    const experience = rand(parseInt(getHeroStat("experience_to") / 10), parseInt(getHeroStat("experience_to") / 8));
+    const experience = randomBetween(
+        parseInt(getHeroStat("experience_to") / 10),
+        parseInt(getHeroStat("experience_to") / 8)
+    );
     updateHeroStat("experience", "add", experience);
-
-    // Display
-    const paragraph_1 = displayImage(State.game.events.monster[3], State.game.events.monster[2]);
-    const paragraph_2 = displayParagraph([
-        `<strong>${State.game.events.monster[2]} </strong> ${Data.content.events.fight_win_1} <strong>`,
-        `${nb_hit} </strong> ${plural(nb_hit, Data.content.vocabulary.hit_singular, Data.content.vocabulary.hit_plural)}`
-    ])
-    const paragraph_3 = displayParagraph([
-        `${Data.content.events.fight_win_2} <strong>${damage}</strong>`,
-        `${plural(damage, Data.content.vocabulary.point_singular, Data.content.vocabulary.point_plural)} ${Data.content.events.fight_win_3}`
-    ], "bad_information");
-
-    get("#game").innerHTML = paragraph_1 + paragraph_2 + paragraph_3;
-
-    // Display XP gain only if still alive
-    if (getHeroStat("health") > 0)
-        get("#game").innerHTML += displayParagraph([
-            `${Data.content.events.fight_win_5} <strong>${experience}</strong>`,
-            `${plural(experience, Data.content.vocabulary.point_singular, Data.content.vocabulary.point_plural)} ${Data.content.events.fight_win_4}`
-        ], "good_information");
+    setEvent("fight_xp_gain", experience);
 }
 
-/**
- * Fight monster by magic : no damage but less experience
- **/
-
+// Fight monster by magic : no damage but less experience
 export function useScroll() {
     if (getInventory("scroll") > 0) {
-        setEvent("sub_action", "fight_over");
+        setEvent("current_subevent", "fight_scroll");
         updateGameStat("fight");
         updateInventory("scroll", "minus", 1);
 
         playSound("scroll");
-        changeDisplay("normal");
 
         const experience = parseInt(getHeroStat("experience_to") / 10);
         updateHeroStat("experience", "add", experience);
-
-        const paragraph_1 = displayImage(State.game.events.monster[3], State.game.events.monster[2]);
-        const paragraph_2 = displayParagraph(Data.content.events.fight_magic);
-        const paragraph_3 = displayParagraph([
-            `${Data.content.events.fight_win_5} <strong>${experience}</strong>`,
-            `${plural(xp, Data.content.vocabulary.point_singular, Data.content.vocabulary.point_plural)} ${Data.content.events.fight_win_4} `
-        ], "good_information");
-
-        get("#game").innerHTML = paragraph_1 + paragraph_2 + paragraph_3;
+        setEvent("fight_xp_gain", experience);
     }
 }

@@ -3,12 +3,13 @@ import { Interface } from './appState.js'
 import { playSound } from './soundManager.js'
 import { chestFound } from './chestManager.js'
 import { meetMerchant } from './merchantManager.js';
+import { startFight } from './fightManager.js';
 
 // "Move" action
 export function playTurn() { 
     setEvent("current_subevent", null);
-    setEvent("potion_used", false)
-
+    setEvent("potion_used", false);
+    setEvent("level_up", false);
     updateSituation("room", "add", 1);
     Interface.section = 'information';
 
@@ -47,12 +48,11 @@ function choiceAction() {
     const events = [
         { name: "no_event", func: noEvent },
         { name: "spirit", func: meetSpirit },
-        { name: "chest", func: chestFound }
-        // { name: "fight", func: fight }
+        { name: "chest", func: chestFound },
+        { name: "fight", func: startFight }
     ];
 
     const availableEvents = events.filter(e => e.name !== getEvent("current_event"));
-
     const index = randomBetween(0, availableEvents.length - 1);
     const event = availableEvents[index];
     event.func();
@@ -65,7 +65,7 @@ function noEvent() {
 
 // Meeting with one spirit : increase one random stat
 function meetSpirit() {
-    setEvent("current_event", "spirit_meeting");
+    setEvent("current_event", "spirit");
     updateGameStat("spirit_meeting");
 
     const meeting = randomBetween(1, 4);
