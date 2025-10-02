@@ -44,13 +44,6 @@ const gameStatsMap = {
     merchant_refused: "merchant_refused"
 };
 
-const validEvents = {
-    last_action: ["no_event", "spirit", "chest", "merchant", "fight"],
-    sub_action: ["chest_over", "merchant_over", "fight_over"],
-    new_action: [],
-    current_event: []
-};
-
 const spiritModifiers = {
     power: "spirit_power",
     health: "spirit_health",
@@ -143,8 +136,6 @@ export function getEvent(type) {
 }
 
 export function setEvent(type, event) {
-    if (!(type in validEvents)) return;
-    
     if (State.events[type] !== event) {
         State.events[type] = event;
     }
@@ -178,4 +169,9 @@ export function getSpiritModifier(stat) {
 export function getLevelUpModifier(stat) {
     const key = levelUpModifiers[stat];
     return Data.settings.modifie[key];
+}
+
+// Others
+export function randomBetween(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }

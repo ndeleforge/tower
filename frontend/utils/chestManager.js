@@ -1,113 +1,70 @@
-import { get, rand, plural } from './utils.js'
-import { getInventory, getInventoryLimit, setEvent, updateGameStat, updateHeroStat, updateInventory } from './helper.js'
-import { Data, State } from './gameState.js'
-import { changeDisplay, displayImage, displayParagraph } from './interfaceManager.js'
+import { getInventory, getInventoryLimit, randomBetween, setEvent, updateGameStat, updateHeroStat, updateInventory } from './appHelper.js'
+import { Data, State } from './appState.js'
 import { playSound } from './soundManager.js'
 
-/**
- * Initialize the chest event : allow open / avoid
- **/
-
+// Init the chest event
 export function chest() {
-    setEvent("last_action", "chest");
-    changeDisplay("chest");
-
-    const paragraph_1 = displayImage(Data.settings.images.chest);
-    const paragraph_2 = `<p>${Data.content.events.chest}.</p>`;
-
-    get("#game").innerHTML = paragraph_1 + paragraph_2;
+    setEvent("current_event", "chest");
 }
 
-/**
- * Open the chest : randomly choose between trap, potion, magic or scroll
- **/
-
+// Open the chest
 export function openChest() {
-    setEvent("sub_action", "chest_over");
+    setEvent("current_subevent", "chest_opened");
     updateGameStat("chest_opened");
-
     playSound("chest");
-    changeDisplay("normal");
 
-    const loot = rand(0, 15);
-    let limited = false;
-    let paragraph_1, paragraph_2, paragraph_3 = "";
+    const loot = randomBetween(0, 15);
+    setEvent("limited_inventory", false);
 
     // Potion (11,12,13,14,15)
     if (loot > 10) {
+        setEvent("chest_type", "potion");
         if (getInventory("potion") >= getInventoryLimit("potion")) {
-            limited = true
+            setEvent("limited_inventory", true);
         }
         else {
             updateInventory("potion", "add", 1)
         }
-
-        paragraph_1 = displayImage(Data.settings.images.chest_open);
-        paragraph_2 = displayParagraph(Data.content.events.chest_potion);
-        if (limited) paragraph_3 = displayParagraph(Data.content.events.chest_limit, "bad_information");
     }
 
-    // Spell (6,7,8,9,10)
+    // Scroll (6,7,8,9,10)
     else if (loot > 5) {
+        setEvent("chest_type", "scroll");
         if (getInventory("scroll") >= getInventoryLimit("scroll")) {
-            limited = true
+            setEvent("limited_inventory", true);
         }
         else {
             updateInventory("scroll", "add", 1)
         }
-
-        paragraph_1 = displayImage(Data.settings.images.chest_open);
-        paragraph_2 = displayParagraph(Data.content.events.chest_scroll);
-        if (limited) paragraph_3 = displayParagraph(Data.content.events.chest_limit, "bad_information");
     }
 
     // Mineral (2,3,4,5)
     else if (loot > 1) {
+        setEvent("chest_type", "mineral");
         if (getInventory("mineral") >= getInventoryLimit("mineral")) {
-            limited = true
+            setEvent("limited_inventory", true);
         }
         else {
             updateInventory("mineral", "add", 1)
         }
-
-        paragraph_1 = displayImage(Data.settings.images.chest_open);
-        paragraph_2 = displayParagraph(Data.content.events.chest_mineral);
-        if (limited) paragraph_3 = displayParagraph(Data.content.events.chest_limit, "bad_information");
     }
 
     // Trap (0,1)
     else {
+        setEvent("chest_type", "trap");
         updateGameStat("chest_trap");
 
-        const damage = rand(1, State.game.character.health / 5);
+        const damage = randomBetween(
+            1, 
+            State.character.health / 5
+        );
+        setEvent("chest_trap_damage", damage);
         updateHeroStat("health", "minus", damage);
-
-        paragraph_1 = displayImage(Data.settings.images.chest_open);
-        paragraph_2 = displayParagraph(Data.content.events.chest_trap_1);
-        paragraph_3 = displayParagraph([
-            Data.content.events.chest_trap_2,
-            `<strong> ${damage} </strong>`,
-            plural(damage, Data.content.vocabulary.point_singular, Data.content.vocabulary.point_plural),
-            Data.content.events.chest_trap_3
-        ], "bad_information");
     }
-
-    get("#game").innerHTML = paragraph_1 + paragraph_2 + paragraph_3;
 }
 
-/**
- * Avoid the chest and do not open it
- **/
-
-export function closeChest() {
-    setEvent("sub_action", "chest_over");
+// Do not open the chest
+export function doNotOpenChest() {
+    setEvent("current_subevent", "chest_not_opened");
     updateGameStat("chest_not_opened");
-
-    changeDisplay("normal");
-
-    const paragraph_1 = displayImage(Data.settings.images.chest);
-    const paragraph_2 = displayParagraph(Data.content.events.chest);
-    const paragraph_3 = displayParagraph(Data.content.events.chest_not_opened);
-
-    get("#game").innerHTML = paragraph_1 + paragraph_2 + paragraph_3;
 }

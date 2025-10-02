@@ -1,26 +1,85 @@
 <template>
     <div class="container">
-        <div v-if="isIntro">
+        <div v-show="isIntro">
             <img :src='Data.settings.images.start' />
             <p>{{  Data.content.events.intro_1 }}</p>
             <p>{{  Data.content.events.intro_2 }}</p>
             <p>{{  Data.content.events.intro_3 }}</p>
         </div>
 
-        <div v-if="noEvent" class="container">
-            <img :src='Data.settings.images.no_event' />
+        <div v-show="noEvent">
+            <img :src='Data.settings.images.no_event' class="img_full" />
             <p>{{  Data.content.events.no_event }}</p>
+        </div>
+
+        <div v-show="spiritMeeting">
+            <div v-if="waterSpirit">
+                <img :src='Data.settings.images.water_spirit' />
+                <p>{{  Data.content.events.spirit_water_1 }}.</p>
+                <p>{{  Data.content.events.spirit_water_2 }} {{ getSpiritModifier("health") }}.</p>
+            </div>
+            <div v-show="fireSpirit">
+                <img :src='Data.settings.images.fire_spirit' />
+                <p>{{  Data.content.events.spirit_fire_1 }}.</p>
+                <p>{{  Data.content.events.spirit_fire_2 }} {{ getSpiritModifier("power") }}.</p>
+            </div>
+            <div v-show="earthSpirit">
+                <img :src='Data.settings.images.earth_spirit' />
+                <p>{{  Data.content.events.spirit_earth_1 }}.</p>
+                <p>{{  Data.content.events.spirit_earth_2 }} {{ getSpiritModifier("stamina") }}.</p>
+            </div>
+            <div v-show="lightSpirit">
+                <img :src='Data.settings.images.light_spirit' />
+                <p>{{  Data.content.events.spirit_light_1 }}.</p>
+                <p>{{  Data.content.events.spirit_light_2 }} {{ getEvent("light_spirit_gain") }} {{ Data.content.events.spirit_light_3 }}.</p>
+            </div>
+        </div>
+
+        <div v-show="chest">
+            <div v-show="!chestOpened && !chestNotOpened">
+                <img :src='Data.settings.images.chest' />
+                <p>{{ Data.content.events.chest }}.</p>
+            </div>
+            <div v-show="chestOpened">
+                <img :src='Data.settings.images.chest_open' />
+                <p v-show="getEvent('chest_type') === 'potion'">{{ Data.content.events.chest_potion }}.</p>
+                <p v-show="getEvent('chest_type') === 'scroll'">{{ Data.content.events.chest_scroll }}.</p>
+                <p v-show="getEvent('chest_type') === 'mineral'">{{ Data.content.events.chest_mineral }}.</p>
+                <p v-show="getEvent('limited_inventory')">{{ Data.content.events.chest_limit }} !</p>
+                <p v-show="getEvent('chest_type') === 'trap'">
+                    <span>{{ Data.content.events.chest_trap_1 }}.</span>
+                    <span>{{ Data.content.events.chest_trap_2 }} {{ getEvent("chest_trap_damage") }} {{ Data.content.events.chest_trap_3 }}.</span>
+                </p>
+            </div>
+            <div v-show="chestNotOpened">
+                <img :src='Data.settings.images.chest' />
+                <p>{{ Data.content.events.chest }}.</p>
+                <p>{{ Data.content.events.chest_not_opened }}.</p>
+            </div>
+        </div>
+
+        <div v-show="potionUsed">
+            <p>{{ Data.content.events.healing }}.</p>
         </div>
     </div>
 </template>
 
 <script setup>
 import { computed } from 'vue';
-import { getEvent, getSituation } from '../../../utils/appHelper.js';
+import { getEvent, getSituation, getSpiritModifier } from '../../../utils/appHelper.js';
 import { Data } from '../../../utils/appState.js';
 
 const isIntro = computed(() => getSituation("floor") === 1 && getSituation("room") === 1);
-const noEvent= computed(() => getEvent("last_action") === 'no_event');
+const noEvent = computed(() => getEvent("current_event") === 'no_event');
+const spiritMeeting = computed(() => getEvent("current_event") === "spirit_meeting");
+const waterSpirit = computed(() => getEvent("current_subevent") === 'water_spirit');
+const fireSpirit = computed(() => getEvent("current_subevent") === 'fire_spirit');
+const earthSpirit = computed(() => getEvent("current_subevent") === 'earth_spirit');
+const lightSpirit = computed(() => getEvent("current_subevent") === 'light_spirit');
+const chest = computed(() => getEvent("current_event") === 'chest');
+const chestOpened = computed(() => getEvent("current_subevent") === 'chest_opened');
+const chestNotOpened = computed(() => getEvent("current_subevent") === 'chest_not_opened');
+const potionUsed = computed(() => getEvent("potion_used") === true);
 </script>
 
 <style scoped>
@@ -32,7 +91,11 @@ const noEvent= computed(() => getEvent("last_action") === 'no_event');
     text-align: center;
 }
 
-.container img {
+span {
+    display: block;
+}
+
+.img_full {
     width: 100%;
 }
 </style>

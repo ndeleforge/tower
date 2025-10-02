@@ -7,11 +7,14 @@
         "language": null
     },
     "events": {
-        "last_action": null,
-        "new_action": null,
-        "sub_action": null,
-        "monster": null,
-        "current_event": null
+        "current_event": null,
+        "current_subevent": null,
+        "monster_data": null,
+        "light_spirit_gain": null,
+        "chest_type": null,
+        "chest_trap_damage": null,
+        "limited_inventory": null,
+        "potion_used": null
     },
     "stats": {
         "best_score": 0,

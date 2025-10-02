@@ -9,7 +9,6 @@ export const Data = reactive({
 export const Interface = reactive({
     screen: null,
     section: 'board',
-    actions: 'normal',
     menu: false,
     modale: false,
     modaleAction: null

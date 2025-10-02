@@ -1,10 +1,13 @@
 import { Data, Interface } from './appState.js'
+import { chest } from './chestManager.js'
 import { playSound } from './soundManager.js'
-import { getHeroStat, getInventory, getSpiritModifier, restoreHealth, setEvent, updateGameStat, updateHeroStat, updateInventory, getEvent, getSituation, setSituation, updateSituation } from './appHelper.js'
+import { getHeroStat, getInventory, getSpiritModifier, restoreHealth, setEvent, updateGameStat, updateHeroStat, updateInventory, getSituation, setSituation, updateSituation, randomBetween } from './appHelper.js'
 
 // "Move" action
 export function playTurn() { 
-    setEvent("sub_action", null);
+    setEvent("current_subevent", null);
+    setEvent("potion_used", false)
+
     updateSituation("room", "add", 1);
     Interface.section = 'information';
 
@@ -39,18 +42,18 @@ export function playTurn() {
 // Choose one action randomly
 function choiceAction() {
     const events = {
-        1: { name: "no_event", func: noEvent }
-        //2: { name: "chest", func: chest },
-        //3: { name: "fight", func: fight },
-        //4: { name: "spirit", func: spirit }
+        1: { name: "no_event", func: noEvent }, 
+        2: { name: "spirit", func: spirit },
+        3: { name: "chest", func: chest }
+        //3: { name: "fight", func: fight }
     };
 
-    const index = 1
+    const index = 3;
     const event = events[index];
 
-    setEvent("new_action", event.name);
+    setEvent("new_event", event.name);
 
-    //if (getEvent("new_action") !== getEvent("last_action")) {
+    //if (getEvent("new_event") !== getEvent("last_event")) {
         event.func();
     //} else {
     //    choiceAction();
@@ -59,88 +62,53 @@ function choiceAction() {
 
 // No event
 function noEvent() {
-    setEvent("last_action", "no_event");
+    setEvent("current_event", "no_event");
 }
 
-/**
- * Meeting with a spirit : randomly choose between fire, water, earth and light
- **/
+// Meeting with one spirit : increase one random stat
+function spirit() {
+    setEvent("current_event", "spirit_meeting");
+    updateGameStat("spirit_meeting");
 
-export function spirit() {
-    setEvent("last_action", "spirit");
-    updateGameStat("spirit_meet");
-
-    const meeting = rand(1, 4)
-    let paragraph_1, paragraph_2, paragraph_3;
+    const meeting = randomBetween(1, 4);
 
     // Earth spirit : add stamina
     if (meeting == 4) {
+        setEvent("current_subevent", "earth_spirit");
         updateHeroStat("stamina", "add", getSpiritModifier("stamina"));
-
-        paragraph_1 = displayImage(Data.settings.images.earth_spirit);
-        paragraph_2 = displayParagraph(Data.content.events.spirit_earth_1);
-        paragraph_3 = displayParagraph([
-            Data.content.events.spirit_earth_2,
-            `<strong>${getSpiritModifier("stamina")}</strong>`,
-            plural(getSpiritModifier("stamina"), Data.content.vocabulary.point_singular, Data.content.vocabulary.point_plural)
-        ], "good_information");
     }
 
-    // 5-6 : Light spirit : add experience
+    // Light spirit : add experience
     else if (meeting == 3) {
-        const experience = rand(parseInt(getHeroStat("experience_to") / 10), parseInt(getHeroStat("experience_to")  / 5));
-        updateHeroStat("experience", "add", experience)
-
-        paragraph_1 = displayImage(Data.settings.images.light_spirit);
-        paragraph_2 = displayParagraph(Data.content.events.spirit_light_1);
-        paragraph_3 = displayParagraph([
-            Data.content.events.spirit_light_2,
-            `<strong>${experience}</strong>`,
-            plural(experience, Data.content.vocabulary.point_singular, Data.content.vocabulary.point_plural),
-            Data.content.events.spirit_light_3
-        ], "good_information");
+        const experience = randomBetween(
+            parseInt(getHeroStat("experience_to") / 10), 
+            parseInt(getHeroStat("experience_to")  / 5)
+        );
+        setEvent("light_spirit_gain", experience);
+        setEvent("current_subevent", "light_spirit");
+        updateHeroStat("experience", "add", experience);
     }
 
-    // 3-4 : Fire spirit : add power
+    // Fire spirit : add power
     else if (meeting == 2) {
+        setEvent("current_subevent", "fire_spirit");
         updateHeroStat("power", "add", getSpiritModifier("power"));
-
-        paragraph_1 = displayImage(Data.settings.images.fire_spirit);
-        paragraph_2 = displayParagraph(Data.content.events.spirit_fire_1);
-        paragraph_3 = displayParagraph([
-            Data.content.events.spirit_fire_2,
-            `<strong>${getSpiritModifier("power")}</strong>`,
-            plural(getSpiritModifier("power"), Data.content.vocabulary.point_singular, Data.content.vocabulary.point_plural)
-        ], "good_information");
     }
 
-    // 1-2 : Water spirit : add health
+    // Water spirit : add health
     else {
+        setEvent("current_subevent", "water_spirit");
         updateHeroStat("health_max", "add", getSpiritModifier("health"));
-
-        paragraph_1 = displayImage(Data.settings.images.water_spirit);
-        paragraph_2 = displayParagraph(Data.content.events.spirit_water_1);
-        paragraph_3 = displayParagraph([
-            Data.content.events.spirit_water_2,
-            `<strong>${getSpiritModifier("health")}</strong>`,
-            plural(getSpiritModifier("health"), Data.content.vocabulary.point_singular, Data.content.vocabulary.point_plural)
-        ], "good_information");
     }
-
-    get("#game").innerHTML = paragraph_1 + paragraph_2 + paragraph_3;
 }
 
-/**
- * Use a potion and regain all health
- **/
-
+// Use one potion to restore health
 export function usePotion() {
     if (getInventory("potion") > 0 && getHeroStat("health") < getHeroStat("health_max")) {
         updateInventory("potion", "minus", 1);
         restoreHealth();
         updateGameStat("potion_used");
+        setEvent("potion_used", true)
         playSound("potion");
-
-        get("#game").innerHTML += '<hr>' + displayParagraph(Data.content.events.healing, "good_information");
     }
 }
