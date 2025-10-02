@@ -2,10 +2,7 @@ import { Data, State } from './appState.js'
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'
 
-/**
- * Load the app version from backend
- **/
-
+// Load the app version from backend
 export async function loadVersion() {
     const url = "/api/version"
     const response = await fetch(`${backendUrl}${url}`);
@@ -18,10 +15,7 @@ export async function loadVersion() {
     Data.version = await response.json();
 }
 
-/**
- * Load the settings from backend
- **/
-
+// Load the settings from backend
 export async function loadSettings() {
     const url = "/api/settings"
     const response = await fetch(`${backendUrl}${url}`);
@@ -33,10 +27,7 @@ export async function loadSettings() {
     Data.settings = await response.json();
 }
 
-/**
- * Load the content from backend
- **/
-
+// Load the content from backend
 export async function loadContent() {
     const lang = (State.core.language == "fr-FR") ? 'fr' : 'en';
 

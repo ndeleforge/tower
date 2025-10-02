@@ -1,7 +1,8 @@
-import { Data, Interface } from './appState.js'
-import { chest } from './chestManager.js'
+import { getHeroStat, getInventory, getSpiritModifier, restoreHealth, setEvent, updateGameStat, updateHeroStat, updateInventory, getSituation, setSituation, updateSituation, randomBetween, getEvent } from './appHelper.js'
+import { Interface } from './appState.js'
 import { playSound } from './soundManager.js'
-import { getHeroStat, getInventory, getSpiritModifier, restoreHealth, setEvent, updateGameStat, updateHeroStat, updateInventory, getSituation, setSituation, updateSituation, randomBetween } from './appHelper.js'
+import { chestFound } from './chestManager.js'
+import { meetMerchant } from './merchantManager.js';
 
 // "Move" action
 export function playTurn() { 
@@ -31,8 +32,10 @@ export function playTurn() {
 
     // Starting the floor 5, there is one chance on two to meet the merchant at each floor
     if (getSituation("floor") > 5 && getSituation("room") == 5) {
-        //const merchantMeeting = rand(1, 2);
-        //(merchantMeeting == 2) ? merchant() : choiceAction();
+        const merchantMeeting = randomBetween(1, 2);
+        if (merchantMeeting == 2) {
+            meetMerchant();
+        }
     }
     else {
         choiceAction();
@@ -41,23 +44,18 @@ export function playTurn() {
 
 // Choose one action randomly
 function choiceAction() {
-    const events = {
-        1: { name: "no_event", func: noEvent }, 
-        2: { name: "spirit", func: spirit },
-        3: { name: "chest", func: chest }
-        //3: { name: "fight", func: fight }
-    };
+    const events = [
+        { name: "no_event", func: noEvent },
+        { name: "spirit", func: meetSpirit },
+        { name: "chest", func: chestFound }
+        // { name: "fight", func: fight }
+    ];
 
-    const index = 3;
-    const event = events[index];
+    const availableEvents = events.filter(e => e.name !== getEvent("current_event"));
 
-    setEvent("new_event", event.name);
-
-    //if (getEvent("new_event") !== getEvent("last_event")) {
-        event.func();
-    //} else {
-    //    choiceAction();
-    //y}
+    const index = randomBetween(0, availableEvents.length - 1);
+    const event = availableEvents[index];
+    event.func();
 }
 
 // No event
@@ -66,7 +64,7 @@ function noEvent() {
 }
 
 // Meeting with one spirit : increase one random stat
-function spirit() {
+function meetSpirit() {
     setEvent("current_event", "spirit_meeting");
     updateGameStat("spirit_meeting");
 

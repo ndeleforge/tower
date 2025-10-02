@@ -58,8 +58,22 @@
             </div>
         </div>
 
+        <div v-show="merchant">
+            <img :src='Data.settings.images.merchant' />
+            <p>{{ Data.content.events.merchant }}.</p>
+            <p v-show="getEvent('current_subevent') === 'merchant_enough'">{{ Data.content.events.merchant_proposition }} ...</p>
+            <p v-show="getEvent('current_subevent') === 'merchant_not_enough'">{{ Data.content.events.merchant_no_mineral }}.</p>
+            <p v-show="getEvent('current_subevent') === 'merchant_refused'">{{ Data.content.events.merchant_refused }} !</p>
+            <div v-show="getEvent('current_subevent') === 'merchant_accepted'">
+                <p>{{ Data.content.events.merchant_accepted }}.</p>
+                <p v-show="getEvent('merchant_offer') === 1">{{ Data.content.events.merchant_offer_1 }} !</p>
+                <p v-show="getEvent('merchant_offer') === 2">{{ Data.content.events.merchant_offer_2 }} !</p>
+                <p v-show="getEvent('merchant_offer') === 3">{{ Data.content.events.merchant_offer_3 }} !</p>
+            </div>
+        </div>
+
         <div v-show="potionUsed">
-            <p>{{ Data.content.events.healing }}.</p>
+            <p>{{ Data.content.events.healing }}</p>
         </div>
     </div>
 </template>
@@ -79,6 +93,7 @@ const lightSpirit = computed(() => getEvent("current_subevent") === 'light_spiri
 const chest = computed(() => getEvent("current_event") === 'chest');
 const chestOpened = computed(() => getEvent("current_subevent") === 'chest_opened');
 const chestNotOpened = computed(() => getEvent("current_subevent") === 'chest_not_opened');
+const merchant = computed(() => getEvent("current_event") === 'merchant');
 const potionUsed = computed(() => getEvent("potion_used") === true);
 </script>
 

@@ -1,8 +1,31 @@
 import { watch, computed } from "vue";
-import { Data, State } from "./appState.js";
 import { setSituation, setCoreData, updateGameStat } from "./appHelper.js"
+import { Data, State } from "./appState.js";
 
 export const SAVE = "TowerData";
+
+// Compute current score
+export const currentScore = computed(() => {
+    const { power, stamina, health_max, level } = State.character
+    const { floor } = State.situation
+
+    return ((power + stamina + health_max) * level * floor) - 30
+})
+
+// Compute best score
+export const bestScore = computed(() => {
+    return Math.max(State.stats.best_score, currentScore.value)
+})
+
+// Compute best floor
+export const bestFloor = computed(() => {
+    return Math.max(State.stats.best_floor, State.situation.floor)
+})
+
+// compute best level
+export const maxLevel = computed(() => {
+    return Math.max(State.stats.max_level, State.character.level)
+})
 
 // Automatically save any changes on the State object
 watch(
@@ -65,29 +88,6 @@ export function deleteSave() {
     deleteStorage(SAVE);
     location.reload();
 }
-
-// Current score
-export const currentScore = computed(() => {
-    const { power, stamina, health_max, level } = State.character
-    const { floor } = State.situation
-
-    return ((power + stamina + health_max) * level * floor) - 30
-})
-
-// Best score
-export const bestScore = computed(() => {
-    return Math.max(State.stats.best_score, currentScore.value)
-})
-
-// Best floor
-export const bestFloor = computed(() => {
-    return Math.max(State.stats.best_floor, State.situation.floor)
-})
-
-// Best level
-export const maxLevel = computed(() => {
-    return Math.max(State.stats.max_level, State.character.level)
-})
 
 // Utility functions
 export function getStorage(key) {

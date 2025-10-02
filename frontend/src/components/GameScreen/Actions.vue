@@ -5,7 +5,7 @@
                 <button class="button_action" @click="doNotOpenChest">{{ Data.content.main.close_chest }}</button>
             </div>
 
-            <div class="actions_line" v-else-if="State.events.current_event === 'merchant'">
+            <div class="actions_line" v-else-if="merchantEventOnGoing">
                 <button class="button_action" @click="acceptMerchant">{{ Data.content.main.accept_offer }}</button>
                 <button class="button_action" @click="refuseMerchant">{{ Data.content.main.refuse_offer }}</button>
             </div>
@@ -40,10 +40,16 @@ import { getHeroStat, getInventory } from '../../../utils/appHelper.js';
 import { State, Data } from '../../../utils/appState.js';
 import { playTurn, usePotion } from '../../../utils/eventsManager.js';
 import { doNotOpenChest, openChest } from '../../../utils/chestManager.js';
+import { acceptMerchant, refuseMerchant } from '../../../utils/merchantManager.js';
 
 const chestEventOnGoing = computed(() => 
     State.events.current_event === 'chest' &&
     !['chest_opened', 'chest_not_opened'].includes(State.events.current_subevent)
+);
+
+const merchantEventOnGoing = computed(() => 
+    State.events.current_event === 'merchant' &&
+    !['merchant_accepted', 'merchant_refused', 'merchant_not_enough'].includes(State.events.current_subevent)
 );
 
 const canUsePotion = computed(() => {
@@ -53,11 +59,6 @@ const canUsePotion = computed(() => {
 const canUseScroll = computed(() => {
     return getInventory("scroll") > 0
 })
-
-function acceptMerchant() { console.log("Accept Merchant") }
-function refuseMerchant() { console.log("Refuse Merchant") }
-function attack() { console.log("Attack") }
-function useScroll() { console.log("Use Scroll") }
 </script>
 
 <style scoped>

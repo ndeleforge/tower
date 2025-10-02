@@ -14,7 +14,8 @@
         "chest_type": null,
         "chest_trap_damage": null,
         "limited_inventory": null,
-        "potion_used": null
+        "potion_used": null,
+        "merchant_offer": null
     },
     "stats": {
         "best_score": 0,

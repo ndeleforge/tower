@@ -1,9 +1,9 @@
 import { getInventory, getInventoryLimit, randomBetween, setEvent, updateGameStat, updateHeroStat, updateInventory } from './appHelper.js'
-import { Data, State } from './appState.js'
+import { State } from './appState.js'
 import { playSound } from './soundManager.js'
 
 // Init the chest event
-export function chest() {
+export function chestFound() {
     setEvent("current_event", "chest");
 }
 
