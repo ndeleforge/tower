@@ -1,8 +1,8 @@
-<template>
+<template >
     <Header v-if='appLoaded' />
     <TitleScreen v-if='titleScreen' />
     <GameScreen v-if='gameScreen && appLoaded' />
-    <Menu />
+    <Menu v-if='appLoaded' />
     <Modale />
 </template>
 
@@ -32,8 +32,8 @@ onMounted(async () => {
         await loadSave();
         await loadContent();
         await initSound();
-        appLoaded.value = true;
         Interface.screen = (getCoreData('ongoing')) ? 'game' : 'title';
+        appLoaded.value = true;
     }
     catch (error) {
         console.error("Error loading app:", error);

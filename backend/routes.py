@@ -1,9 +1,8 @@
 import os
-from utils import load_json_file
+from utils import load_json
 from flask import Blueprint, current_app, send_from_directory, jsonify
 
 routes = Blueprint("routes", __name__)
-
 
 @routes.route("/", defaults={"path": ""})
 @routes.route("/<path:path>")
@@ -24,10 +23,11 @@ def get_version():
 
 @routes.route("/api/locale/<lang>", methods=["GET"])
 def get_translation(lang):
-    locales_dir = os.path.join(os.path.dirname(__file__), "locales")
-    return load_json_file(locales_dir, f"{lang}.json", "Language not found")
+    locales_dir = os.path.join(os.path.dirname(__file__), "db/locales")
+    return load_json(locales_dir, f"{lang}.json", "Language not found")
+
 
 @routes.route("/api/settings", methods=["GET"])
 def get_settings():
-    src_dir = os.path.join(os.path.dirname(__file__), "src")
-    return load_json_file(src_dir, "settings.json", "Settings not found")
+    src_dir = os.path.join(os.path.dirname(__file__), "db/settings")
+    return load_json(src_dir, "settings.json", "Settings not found")
