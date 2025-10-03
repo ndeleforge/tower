@@ -7,7 +7,7 @@ from routes import routes
 
 # ------------------ Configuration ------------------
 
-APP_VERSION = "2025.09"
+APP_VERSION = "2025.10.01"
 APP_ENV = os.getenv("APP_ENV", "development")
 
 if APP_ENV == "production":
