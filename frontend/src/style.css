@@ -1,0 +1,136 @@
+/* ======================================== */
+/* ======== VARIABLES */
+
+/* light theme */
+
+@media (prefers-color-scheme:no-preference),
+(prefers-color-scheme:light) {
+    :root {
+        --background-body: radial-gradient(circle, #5585b5, #8aa0c7, #b6bed9, #ddddec, #fff);
+        --background-app: white;
+        --background-character: #262931;
+        --text-main: black;
+        --text-character: white;
+        --start-title-border: black;
+        --start-input-border: black;
+        --start-input-text: #262931;
+        --button-color-0: indianred;
+        --button-color-3: #262931;
+    }
+}
+
+/* dark theme */
+
+@media (prefers-color-scheme:dark) {
+    :root {
+        --background-body: radial-gradient(circle, #262931, #212026, #1a171b, #110e10, #000);
+        --background-app: #262931;
+        --background-character: black;
+        --text-main: white;
+        --text-character: white;
+        --start-title-border: white;
+        --start-input-border: white;
+        --start-input-text: white;
+        --button-color-0: white;
+        --button-color-3: black;
+    }
+}
+
+/* all themes */
+
+:root {
+    --error-color: red;
+    --background-header: black;
+    --background-gameover: indianred;
+    --background-menu: #262931;
+    --text-link: lightcoral;
+    --text-red: #AA6373;
+    --text-green: #7FB285;
+    --text-header: white;
+    --text-menu: white;
+    --button-color-1: white;
+    --button-color-2: indianred;
+    --progress-background: lightgrey;
+    --progress-text: #262931;
+    --progress-health: indianred;
+    --progress-xp: lightskyblue;
+    --start-input-background: transparent;
+    --transparency: rgba(0, 0, 0, 0.9);
+}
+
+/* ======================================== */
+/* ======== MAIN */
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    font-size: 1em;
+    color: var(--text-main);
+    background-image: var(--background-body);
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    margin: 0 32vw;
+    min-height: 100dvh;
+    background-color: var(--background-app);
+}
+
+button,
+input {
+    font-family: inherit;
+}
+
+button {
+    padding: 2vh;
+    border: 0;
+    color: var(--button-color-1);
+    background-color: var(--button-color-3);
+    transition: all 0.5s ease-out;
+    cursor: pointer;
+}
+
+button:hover {
+    color: var(--button-color-2);
+}
+
+.disabled,
+.disabled:hover {
+    color: var(--button-color-1) !important;
+    opacity: 0.5 !important;
+    background-color: var(--button-color-3) !important;
+    cursor: not-allowed !important;
+}
+
+a {
+    text-decoration: none;
+    color: var(--text-link);
+    cursor: pointer;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width:1024px) {
+    html,
+    body {
+        font-size: 0.9em;
+    }
+
+    button:active,
+    button:focus,
+    input:active,
+    input:focus {
+        outline: 0 !important;
+    }
+
+    #app {
+        margin: 0;
+        border: 0;
+        border-radius: 0;
+    }
+}
