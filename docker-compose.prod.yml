@@ -9,7 +9,7 @@ services:
     ports:
       - "5900:5000"
     environment:
-      APP_ENV: production
+      APP_ENV: prod
     restart: unless-stopped
 
   tower-cloudflared:
