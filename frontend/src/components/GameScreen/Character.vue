@@ -98,7 +98,7 @@ watch(
 
 .character_line {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: center;
     padding: 0.8vh 0;
 }
@@ -120,7 +120,7 @@ watch(
     position: relative;
     align-items: center;
     justify-content: center;
-    width: 15vw;
+    width: 12vw;
     height: 25px;
     margin: 1vh;
     border-radius: 4px;

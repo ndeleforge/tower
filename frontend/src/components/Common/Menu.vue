@@ -52,19 +52,22 @@ function toggleSound() {
     position: absolute;
     flex-direction: column;
     height: 100dvh;
-    width: 36vw;
+    width: 30%;
+    left: 50%;
+    transform: translateX(-50%);
     color: var(--text-menu);
     background-color: var(--background-menu);
 }
 
 h1 {
-    margin: 2vh 0 2vh 2vh;
+    margin: 2vh 0 vh 0;
     border-bottom: 2px solid var(--text-menu);
     font-size: 2em;
+    padding-left: 2vh;
 }
 
 h1:first-child {
-    margin-top: 3vh;
+    margin-top: 5vh;
 }
 
 .list {
@@ -86,7 +89,7 @@ h1:first-child {
 }
 
 button {
-    min-width: 45%;
+    min-width: 25%;
     border-radius: 30px;
     font-size: 1.5em;
     background-color: var(--button-color-2);
@@ -110,5 +113,9 @@ button:hover {
         border-radius: 0;
         font-size: 1.1em;
     }
+
+    button {
+    font-size: 1em;
+}
 }
 </style>

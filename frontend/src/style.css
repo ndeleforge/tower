@@ -74,7 +74,8 @@ body {
 #app {
     display: flex;
     flex-direction: column;
-    margin: 0 32vw;
+    width: 30%;
+    margin: 0 auto;
     min-height: 100dvh;
     background-color: var(--background-app);
 }
@@ -129,6 +130,7 @@ a:hover {
     }
 
     #app {
+        width: 100%;
         margin: 0;
         border: 0;
         border-radius: 0;

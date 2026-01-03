@@ -77,6 +77,7 @@ const canUseScroll = computed(() => {
 }
 
 .button_action {
+    width: 45%;
     border-radius: 30px;
     font-size: 1em;
 }
@@ -88,8 +89,7 @@ const canUseScroll = computed(() => {
 
 @media (max-width:1024px) {
     .button_action {
-        width: 45vw;
-        font-size: 1em;
+        font-size: 0.9em;
     }
 
     .button_action:hover {
