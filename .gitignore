@@ -1,0 +1,11 @@
+# Environment files
+.env
+
+# Backend
+/backend/.venv
+/backend/__pycache__
+
+# Frontend
+/frontend/node_modules
+/frontend/package-lock.json
+/frontend/dist
